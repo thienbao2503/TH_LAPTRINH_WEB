@@ -1,0 +1,412 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LaiNguyenThienBao_2280600181</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/LaiNguyenThienBao_2280600181.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"  integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    @*<header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LaiNguyenThienBao_2280600181</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>*@
+    <header>
+        <div class="promo-bar">
+            <a href>
+                <span>
+                    MIỄN PHÍ VẬN CHUYỂN VỚI ĐƠN HÀNG NỘI THÀNH &gt; 300K - ĐỔI TRẢ
+                    TRONG 30 NGÀY - ĐẢM BẢO CHẤT LƯỢNG
+                </span>
+            </a>
+        </div>
+        <div class="navbar">
+            <div class="container">
+                <div class="box">
+                    <div class="item">
+                        <a aria-label="logo" class="logo" href>
+                            <!-- <img src="./images/logo.png" height="76" width="400"
+                                alt="ảnh-website" /> -->
+                            <h1>Lại Nguyễn <span>THIÊN BẢO</span> </h1>
+                            <span class="mssv">2280600181</span>
+
+                        </a>
+                    </div>
+                    <div class="item">
+                        <ul class="menu-v1">
+                            <li class="item-v1">
+                                <a aria-label="trang-chu" href="#">
+                                    trang chủ
+                                    <!-- <i class="fi fi-rr-angle-small-down"></i> -->
+                                </a>
+                                <!-- <ul>
+                                    <li><a aria-label="item" href>item 1</a></li>
+                                    <li><a aria-label="item" href>item 1</a></li>
+                                    <li><a aria-label="item" href>item 1</a></li>
+                                </ul> -->
+                            </li>
+                            <li class="item-v1">
+                                <a href="#">
+                                    bộ sưu tập
+                                    <!-- <i class="fi fi-rr-angle-small-down"></i>  -->
+                                </a>
+                                <!-- <ul>
+                                    <li><a aria-label="item" href>item 1</a></li>
+                                    <li><a aria-label="item" href>item 1</a></li>
+                                    <li><a aria-label="item" href>item 1</a></li>
+                                </ul> -->
+
+                            </li>
+                            <li class="item-v1">
+                                <a asp-controller="product">
+                                    sản phẩm
+                                    <!-- <i class="fi fi-rr-angle-small-down"></i> -->
+                                </a>
+                                <!-- <ul>
+                                    <li><a aria-label="item" href>item 1</a></li>
+                                    <li><a aria-label="item" href>item 1</a></li>
+                                    <li><a aria-label="item" href>item 1</a></li>
+                                </ul> -->
+                            </li>
+                            <!-- <li class="item-v1">
+                                <a aria-label="item" href>giới thiệu</a>
+                            </li>
+                            <li class="item-v1">
+                                <a aria-label="item" href>tin tức</a>
+                            </li>
+                            <li class="item-v1">
+                                <a aria-label="item" href>liên hệ</a>
+                            </li> -->
+                        </ul>
+                    </div>
+                    <div class="item">
+                        <!-- <div class="wrapper">
+                            <button type="button" aria-label="search" onclick="handleShowModal('modal-search')"><i
+                                    class="fi fi-rr-search"></i></button>
+                            <div id="modal-search" class="modal">
+                                <p>tìm kiếm</p>
+                                <div class="form-search">
+                                    <input placeholder="Tìm kiếm sản phẩm" type="text">
+                                    <button><i class="fi fi-rr-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wrapper">
+                            <button type="button" aria-label="Aria user" onclick="handleShowModal('modal-user')"><i
+                                    class="fi fi-rr-user"></i></button>
+                            <div id="modal-user" class="modal">
+                                <h2>ĐĂNG NHẬP TÀI KHOẢN</h2>
+                                <p>Nhập email và mật khẩu của bạn:</p>
+                                <input placeholder="Email" type="text">
+                                <input placeholder="Mật khẩu" type="text">
+                                <div class="site-box">
+                                    <p>This site is protected by reCAPTCHA and the Google
+                                        <a aria-label="Privacy-Policy" href>Privacy
+                                            Policy</a> and <a href aria-label="Terms-of-Service">Terms of Service</a>
+                                        apply.
+                                    </p>
+                                </div>
+
+                                <button class="btn-main">Đăng nhập</button>
+                                <div class="site-box sp-site">
+                                    <p>Khách hàng mới? <a aria-label="account" href>Tạo tài khoản</a></p>
+                                    <p>Quên mật khẩu? <a aria-label="forgot-password" href>Khôi phục mật khẩu</a></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wrapper" onblur="closeAllModal()">
+                            <button type="button" aria-label="cart" onclick="handleShowModal('modal-cart')">
+                                <i class="fi fi-rr-shopping-cart"></i>
+                            </button>
+                            <div id="modal-cart" class="modal">
+                                <p class="title">giỏ hàng</p>
+                                <div class="mini-cart">
+                                    <i class="fi fi-rr-shopping-cart"></i>
+                                    <div>Hiện chưa có sản phẩm</div>
+                                </div>
+                                <div class="total">
+                                    <p>
+                                        TỔNG TIỀN:</p>
+                                    <p>0đ</p>
+                                </div>
+                                <div class="total">
+                                    <button class="btn-main">Xem giỏ hàng</button>
+                                    <button class="btn-main">Thanh toán</button>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <h1><span>2280600181</span></h1> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar-mobie">
+            <div class="box">
+                <div class="item">
+                    <button onclick="handleShowModal('modal-menu')">
+                        <div id="icon-open-menu"></div>
+                    </button>
+                </div>
+                <div class="item">
+                    <a class="mobie-logo" href>
+                        <img src="./images/logo.png" height="76" width="400"
+                             alt="ảnh-website" />
+                    </a>
+
+                    <div class="form-search-mobie-logo">
+                        <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                        <button><i class="fi fi-rr-search"></i></button>
+                    </div>
+
+
+                </div>
+                <div class="item">
+                    <div class="wrapper">
+                        <button type="button" id="btn-user" onclick="handleShowModal('modal-user-mobie','btn-user')">
+                            <i class="fi fi-rr-user"></i>
+                        </button>
+
+                    </div>
+
+                    <div class="wrapper" onblur="closeAllModal()">
+                        <button type="button" id="btn-shopping"
+                                onclick="handleShowModal('modal-shopping-mobie','btn-shopping')">
+                            <i class="fi fi-rr-shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-search form-search-mobie">
+                <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                <button><i class="fi fi-rr-search"></i></button>
+            </div>
+            <div id="modal-menu" class="modal-mobie">
+                <ul class="menu-v1">
+                    <li class="item-v1 ">
+                        <a href="#" onclick="showMenuV2('trang-chu')">
+                            Trang chủ
+                            <!-- <i class="fi fi-rr-angle-small-right"></i> -->
+                        </a>
+                        <!-- <ul id="trang-chu">
+                            <li>
+                                <a href="#" onclick="showMenuV2('trang-chu')"><i
+                                        class="fi fi-rr-angle-small-left"></i>Trang chủ</a>
+                            </li>
+                            <li>
+                                <a href="">item 1</a>
+                            </li>
+                            <li>
+                                <a href="">item 2</a>
+                            </li>
+                            <li>
+                                <a href="">item 3</a>
+                            </li>
+                        </ul> -->
+
+                    </li>
+                    <li class="item-v1">
+                        <a href="#" onclick="showMenuV2('bo-suu-tap')">
+                            Bộ sưu tập
+                            <!-- <i class="fi fi-rr-angle-small-right"></i> -->
+                        </a>
+                        <!-- <ul id="bo-suu-tap">
+                            <li>
+
+                                <a href="#" onclick="showMenuV2('bo-suu-tap')"><i class="fi fi-rr-angle-small-left"></i>
+                                    Trang chủ</a>
+                            </li>
+                            <li>
+                                <a href="">item 1</a>
+                            </li>
+                            <li>
+                                <a href="">item 2</a>
+                            </li>
+                            <li>
+                                <a href="">item 3</a>
+                            </li>
+                        </ul> -->
+                    </li>
+                    <li class="item-v1">
+                        <a href="#" onclick="showMenuV2('san-pham')">
+                            Sản phẩm
+                            <!-- <i class="fi fi-rr-angle-small-right"></i> -->
+                        </a>
+                        <!-- <ul id="san-pham">
+                            <li>
+
+                                <a href="#" onclick="showMenuV2('san-pham')"><i class="fi fi-rr-angle-small-left"></i>
+                                    Trang chủ</a>
+                            </li>
+                            <li>
+                                <a href="">item 1</a>
+                            </li>
+                            <li>
+                                <a href="">item 2</a>
+                            </li>
+                            <li>
+                                <a href="">item 3</a>
+                            </li>
+                        </ul> -->
+                    </li>
+                    <!-- <li class="item-v1">
+                        <a href="">
+                            Giới thiệu
+                        </a>
+                    </li>
+                    <li class="item-v1">
+                        <a href="">
+                            Tin tức
+                        </a>
+                    </li>
+                    <li class="item-v1">
+                        <a href="">
+                            Liên hệ
+                        </a>
+                    </li> -->
+                </ul>
+            </div>
+            <!-- <div id="modal-user-mobie" class="modal-mobie modal-user">
+                <h2>ĐĂNG NHẬP TÀI KHOẢN</h2>
+                <p>Nhập email và mật khẩu của bạn:</p>
+                <input placeholder="Email" type="text">
+                <input placeholder="Mật khẩu" type="text">
+                <div class="site-box">
+                    <p>This site is protected by reCAPTCHA and the Google
+                        <a href>Privacy
+                            Policy</a> and <a href>Terms of Service</a>
+                        apply.
+                    </p>
+                </div>
+
+                <button class="btn-main">Đăng nhập</button>
+                <div class="site-box sp-site">
+                    <p>Khách hàng mới? <a href>Tạo tài khoản</a></p>
+                    <p>Quên mật khẩu? <a href>Khôi phục mật khẩu</a></p>
+                </div>
+            </div>
+            <div id="modal-shopping-mobie" class="modal-mobie modal-shopping">
+                <p class="title">giỏ hàng</p>
+                <div class="mini-cart">
+                    <i class="fi fi-rr-shopping-cart"></i>
+                    <div>Hiện chưa có sản phẩm</div>
+                </div>
+                <div class="total">
+                    <p>
+                        TỔNG TIỀN:</p>
+                    <p>0đ</p>
+                </div>
+                <div class="total">
+                    <button class="btn-main">Xem giỏ hàng</button>
+                    <button class="btn-main">Thanh toán</button>
+                </div>
+            </div> -->
+
+
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer>
+        <section class="footer">
+            <div class="container">
+                <div class="box">
+                    <div class="item">
+                        <h3>giới thiệu</h3>
+                        <p>
+                            CosmoLove trang mua sắm trực tuyến của thương hiệu thời trang
+                            Lama, thời trang nam, nữ, phụ kiện, giúp bạn tiếp cận xu hướng
+                            thời trang mới nhất.
+                        </p>
+                        <img loading="lazy" width="150" height="200" src="~/images/logo-bct.webp" alt="ảnh-website">
+                        <div class="social">
+                            <a href aria-label="link-social">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                            <a href aria-label="link-social">
+                                <i class="fa-brands fa-google"></i>
+                            </a>
+                            <a href aria-label="link-social">
+                                <i class="fa-brands fa-twitter"></i>
+                            </a>
+                            <a href aria-label="link-social">
+                                <i class="fa-brands fa-youtube"></i>
+                            </a>
+                            <a href aria-label="link-social">
+                                <i class="fa-brands fa-skype"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h3>THÔNG TIN LIÊN HỆ</h3>
+                        <ul>
+                            <li>
+                                <p>
+                                    Địa chỉ: Tầng 4, tòa nhà Flemington, số 182, đường Lê Đại
+                                    Hành, phường 15, quận 11, Tp. Hồ Chí Minh.
+                                </p>
+                            </li>
+                            <li>
+                                <p>Điện thoại: 1900.636.099</p>
+                            </li>
+                            <li>
+                                <p>Fax: 1900.636.099</p>
+                            </li>
+                            <li>
+                                <p>Mail: khowebapp@gmail.com</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="item">
+                        <h3>FANPAGE</h3>
+                        <div>
+                            <iframe title="FANPAGE"
+                                    src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D61552601110363&tabs=timeline&width=340&height=70&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=1379733399300539"
+                                    style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                                    allowfullscreen="true"
+                                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-copyright">
+            <div class="container">
+                <p>Copyright © 2024 CosmoLove. Powered by khowebapp.com</p>
+
+            </div>
+        </section>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
