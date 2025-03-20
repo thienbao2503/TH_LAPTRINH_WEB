@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\TH_LAP_TRINH_WEB.props" />
+</Project>

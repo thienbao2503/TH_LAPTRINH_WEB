@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<section class="section-slider">
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="./images/slideshow_1.webp" height="700" width="1920" alt="ảnh-website" />
+            </div>
+            <div class="swiper-slide">
+                <img src="./images/slideshow_2.webp" alt="ảnh-website" height="700" width="1920" />
+            </div>
+            <div class="swiper-slide">
+                <img src="./images/slideshow_3.webp" alt="ảnh-website" height="700" width="1920" />
+            </div>
+        </div>
+    </div>
+    <div class="sp-button"></div>
+    <div class="button-next"><i class="fi fi-rr-angle-small-right"></i></div>
+    <div class="button-prev"><i class="fi fi-rr-angle-small-left"></i></div>
+</section>
+
+<section class="section-selling-products">
+    <div class="container">
+        <div class="box-1">
+            <h2><a href>Sản phẩm bán chạy</a></h2>
+            <a href>Xem thêm</a>
+        </div>
+        <div class="box-2">
+            
+            @foreach (var product in Model)
+            {
+                <div class="item">
+                    <a aria-label="link-product" href="#">
+                        <img src="@product.ImageUrl" height="565" width="565" alt="@product.Name" />
+                    </a>
+                    <div class="detail">
+                        <h3>
+                            <a href="#">@product.Name</a>
+                        </h3>
+                        <p>@product.Price.ToString("N0") đ</p>  <!-- Định dạng giá có dấu phẩy -->
+                    </div>
+                </div>
+            }
+            
+        </div>
+    </div>
+</section>
