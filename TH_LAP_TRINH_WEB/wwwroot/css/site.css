@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+﻿@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
 :root {
     --primary-color: #fddbe1;
@@ -10,6 +10,12 @@ body {
     font-weight: 500;
     font-family: "Quicksand", sans-serif;
     margin: 0;
+}
+
+form {
+    gap: 20px;
+    display :flex;
+    flex-direction:column;
 }
 
 a {
@@ -558,10 +564,17 @@ input {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            font-size:18px;
+            font-size:16px;
             color: #000;
         }
-
+            .section-selling-products .box-2 .item .detail h3 a {
+                display: -webkit-box;
+                -webkit-line-clamp: 1; /* Giới hạn số dòng, có thể thay đổi số này */
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: normal; /* Đảm bảo chữ xuống dòng nếu cần */
+            }
             .section-selling-products .box-2 .item .detail h3 a:hover {
                 transition: 0.2s;
                 color: var(--primary-color-bold);
