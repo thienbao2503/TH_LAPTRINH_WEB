@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TH_LAP_TRINH_WEB", "TH_LAP_TRINH_WEB\TH_LAP_TRINH_WEB.csproj", "{13C6EEC8-56A0-4DC6-AFFC-E6BF6BD235DB}"
 EndProject

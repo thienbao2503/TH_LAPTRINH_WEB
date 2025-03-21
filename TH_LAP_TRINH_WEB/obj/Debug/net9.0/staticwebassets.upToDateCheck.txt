@@ -65,6 +65,8 @@ wwwroot\favicon.ico
 wwwroot\images\IMG0001.jpg
 wwwroot\images\IMG0002.jpg
 wwwroot\images\IMG0003.jpg
+wwwroot\images\IMG0004.jpg
+wwwroot\images\IMG0005.jpg
 wwwroot\images\logo.png
 wwwroot\images\logo-bct.webp
 wwwroot\images\slideshow_1.webp

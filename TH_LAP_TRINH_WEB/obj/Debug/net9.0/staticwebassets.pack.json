@@ -25,6 +25,14 @@
       "PackagePath": "staticwebassets\\images\\IMG0003.jpg"
     },
     {
+      "Id": "D:\\code\\C#\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\images\\IMG0004.jpg",
+      "PackagePath": "staticwebassets\\images\\IMG0004.jpg"
+    },
+    {
+      "Id": "D:\\code\\C#\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\images\\IMG0005.jpg",
+      "PackagePath": "staticwebassets\\images\\IMG0005.jpg"
+    },
+    {
       "Id": "D:\\code\\C#\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\images\\logo-bct.webp",
       "PackagePath": "staticwebassets\\images\\logo-bct.webp"
     },

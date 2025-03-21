@@ -33,9 +33,20 @@ i {
     margin-top: 6px;
 }
 
-input {
-    outline: none;
+.navbar-nav {
+    display: flex !important;
+    flex-direction : row;
+    gap:10px;
 }
+    .navbar-nav .nav-item a {
+        font-family: "Quicksand", sans-serif;
+        letter-spacing: 2px;
+        font-weight: 700;
+        font-size: 13px;
+    }
+    input {
+        outline: none;
+    }
 .table_btn {
     width : 200px;
     display : flex;
@@ -280,6 +291,7 @@ input {
         .navbar .box .item:nth-child(3) {
             padding: 0 15px;
             display: flex;
+            justify-content : flex-end;
         }
 
             .navbar .box .item:nth-child(3) button {

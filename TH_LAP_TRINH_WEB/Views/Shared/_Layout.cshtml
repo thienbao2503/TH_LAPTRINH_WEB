@@ -58,25 +58,25 @@
       <div class="container">
         <div class="box">
           <div class="item">
-                        <a aria-label="logo" asp-controller="Home">
+                        <a aria-label="logo" asp-area="" asp-controller="Home">
                             <h1 class="logo-name">Thiên Bảo <span>2280600181</span></h1>
                             </a>
           </div>
           <div class="item">
             <ul class="menu-v1">
-              <li class="item-v1">
-                                <a aria-label="trang-chu" asp-controller="Home">Trang Chủ</a>
-                
-              </li>
-              <li class="item-v1">
-                                <a asp-controller="product"> Sản Phẩm </a>
-              </li>
-              <li class="item-v1">
-                                <a asp-controller="category">Danh Mục</a>
-              </li>
+                <li class="item-v1">
+                    <a aria-label="trang-chu" asp-area="" asp-controller="Home" asp-action="Index">Trang Chủ</a>
+                </li>
+                <li class="item-v1">
+                    <a asp-area="Admin" asp-controller="Product" asp-action="Index">Sản Phẩm</a>
+                </li>
+                <li class="item-v1">
+                    <a asp-area="Admin" asp-controller="Category" asp-action="Index">Danh Mục</a>
+                </li>
             </ul>
           </div>
           <div class="item">
+			<partial name="_LoginPartial" />
             @* <div class="wrapper"> *@
             @*   <button type="button" aria-label="search" onclick="handleShowModal('modal-search')"><i *@
             @*       class="fi fi-rr-search"></i></button> *@
