@@ -30,26 +30,33 @@ namespace TH_LAP_TRINH_WEB.Areas.Admin.Controllers
         {
             var categories = await _categoryRepository.GetAllAsync();
             ViewBag.Categories = new SelectList(categories, "Id", "Name");
-            return View();
+            return View(new Product()); // Pass empty product model
         }
         // Xử lý thêm sản phẩm mới
         [HttpPost]
-        public async Task<IActionResult> Add(Product product, IFormFile
-        imageUrl)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Add([Bind("Name,Price,Description,CategoryId")] Product product, IFormFile imageUrl)
         {
             if (ModelState.IsValid)
             {
-                if (imageUrl != null)
+                try
                 {
-                    // Lưu hình ảnh đại diện tham khảo bài 02 hàm SaveImage
-                    product.ImageUrl = await SaveImage(imageUrl);
+                    if (imageUrl != null && imageUrl.Length > 0)
+                    {
+                        product.ImageUrl = await SaveImage(imageUrl);
+                    }
+                    await _productRepository.AddAsync(product);
+                    return RedirectToAction(nameof(Index));
                 }
-                await _productRepository.AddAsync(product);
-                return RedirectToAction(nameof(Index));
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Error saving product: " + ex.Message);
+                }
             }
-            // Nếu ModelState không hợp lệ, hiển thị form với dữ liệu đã nhập
+
+            // If we got this far, something failed, redisplay form
             var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+            ViewBag.Categories = new SelectList(categories, "Id", "Name", product.CategoryId);
             return View(product);
         }
         // Viết thêm hàm SaveImage (tham khảo bài 02)

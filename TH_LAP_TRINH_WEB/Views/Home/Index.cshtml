@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@Html.AntiForgeryToken()
 
 <section class="section-slider">
     <div class="swiper mySwiper">
@@ -24,11 +26,19 @@
 <section class="section-selling-products">
     <div class="container">
         <div class="box-1">
-            <h2><a href>Sản phẩm bán chạy</a></h2>
-            <a href>Xem thêm</a>
+            <h2><a>Sản phẩm bán chạy</a></h2>
+            <div class="category-filter">
+                <a href="/" class="@(Context.Request.Query["categoryId"].Count == 0 ? "active" : "")">Tất cả</a>
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <a href="/?categoryId=@category.Id"
+                        class="@(Context.Request.Query["categoryId"] == category.Id.ToString() ? "active" : "")">
+                        @category.Name
+                    </a>
+                }
+            </div>
         </div>
         <div class="box-2">
-            
             @foreach (var product in Model)
             {
                 <div class="item">
@@ -39,11 +49,13 @@
                         <h3>
                             <a href="#">@product.Name</a>
                         </h3>
-                        <p>@product.Price.ToString("N0") đ</p>  <!-- Định dạng giá có dấu phẩy -->
+                        <p>@product.Price.ToString("N0") đ</p>
+                        <button class="btn-main add-to-cart" data-product-id="@product.Id">
+                            Thêm vào giỏ
+                        </button>
                     </div>
                 </div>
             }
-            
         </div>
     </div>
 </section>

@@ -149,3 +149,130 @@ window.addEventListener('scroll', handleScroll);
 //    }
 //});
 
+function updateCartDisplay() {
+    fetch('/Home/GetCartSummary')
+        .then(response => response.json())
+        .then(data => {
+            const cartItems = document.querySelector('#modal-cart .mini-cart');
+            const totalElement = document.querySelector('#modal-cart .total p:nth-child(2)');
+
+            if (data.items.length === 0) {
+                cartItems.innerHTML = '<i class="fi fi-rr-shopping-cart"></i><div>Hiện chưa có sản phẩm</div>';
+            } else {
+                let html = '';
+                data.items.forEach(item => {
+                    html += `
+                        <div class="cart-item">
+                            <img src="${item.imageUrl}" alt="${item.productName}" width="50">
+                            <div class="item-details">
+                                <p>${item.productName}</p>
+                                <p>${item.price.toLocaleString('vi-VN')}đ x ${item.quantity}</p>
+                                <button onclick="removeFromCart(${item.productId})">Xóa</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                cartItems.innerHTML = html;
+            }
+
+            totalElement.textContent = data.total.toLocaleString('vi-VN') + 'đ';
+        });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    updateCartDisplay();
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function () {
+            const productId = parseInt(this.dataset.productId);
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+            fetch('/Home/AddToCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': token
+                },
+                body: JSON.stringify({
+                    productId: productId,
+                    quantity: 1
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = '/home/cart';
+                    } else {
+                        console.error('Error:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    });
+
+    // Quantity controls for cart page
+    document.querySelectorAll('.quantity-controls').forEach(control => {
+        const decrease = control.querySelector('.decrease');
+        const increase = control.querySelector('.increase');
+        const input = control.querySelector('.quantity-input');
+        const productId = control.closest('.cart-item').dataset.productId;
+
+        decrease?.addEventListener('click', () => {
+            const newValue = Math.max(1, parseInt(input.value) - 1);
+            input.value = newValue;
+            updateCartItemQuantity(productId, newValue);
+        });
+
+        increase?.addEventListener('click', () => {
+            const newValue = parseInt(input.value) + 1;
+            input.value = newValue;
+            updateCartItemQuantity(productId, newValue);
+        });
+
+        input?.addEventListener('change', () => {
+            const newValue = Math.max(1, parseInt(input.value));
+            input.value = newValue;
+            updateCartItemQuantity(productId, newValue);
+        });
+    });
+});
+
+function updateCartItemQuantity(productId, quantity) {
+    fetch('/Home/UpdateCart', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId, quantity })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+}
+
+function removeFromCart(productId) {
+    fetch('/Home/RemoveFromCart', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId: productId })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                updateCartDisplay();
+            }
+        });
+}
+

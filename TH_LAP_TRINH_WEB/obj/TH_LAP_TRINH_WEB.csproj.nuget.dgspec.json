@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\code\\C#\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\TH_LAP_TRINH_WEB.csproj": {}
+    "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\TH_LAP_TRINH_WEB.csproj": {}
   },
   "projects": {
-    "D:\\code\\C#\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\TH_LAP_TRINH_WEB.csproj": {
+    "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\TH_LAP_TRINH_WEB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\code\\C#\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\TH_LAP_TRINH_WEB.csproj",
+        "projectUniqueName": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\TH_LAP_TRINH_WEB.csproj",
         "projectName": "TH_LAP_TRINH_WEB",
-        "projectPath": "D:\\code\\C#\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\TH_LAP_TRINH_WEB.csproj",
+        "projectPath": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\TH_LAP_TRINH_WEB.csproj",
         "packagesPath": "C:\\Users\\thien\\.nuget\\packages\\",
-        "outputPath": "D:\\code\\C#\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\obj\\",
+        "outputPath": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

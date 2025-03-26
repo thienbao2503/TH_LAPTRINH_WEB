@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TH_LAP_TRINH_WEB.Interface;
 using TH_LAP_TRINH_WEB.Models;
 
-namespace TH_LAP_TRINH_WEB.Areas.Admin.Controllers
+namespace TH_LAP_TRINH_WEB.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = SD.Role_Admin)]

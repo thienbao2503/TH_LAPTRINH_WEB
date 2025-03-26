@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EYJc5WgHpy0=",
+  "dgSpecHash": "S74LeMN20NE=",
   "success": true,
-  "projectFilePath": "D:\\code\\C#\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\TH_LAP_TRINH_WEB.csproj",
+  "projectFilePath": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\TH_LAP_TRINH_WEB.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\thien\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\thien\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
