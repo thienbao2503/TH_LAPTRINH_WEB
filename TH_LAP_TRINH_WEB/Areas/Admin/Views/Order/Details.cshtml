@@ -1,11 +1,13 @@
-﻿@model TH_LAP_TRINH_WEB.Models.Order
+﻿@using System.Globalization
+@model TH_LAP_TRINH_WEB.Models.Order
 
 @{
     ViewData["Title"] = "Order Details";
+    Layout = "~/Areas/Admin/Views/_Layout.cshtml";
 }
 
-<div class="container">
-    <h2>Chi Tiết Đơn Hàng</h2>
+<div class="container-table">
+    <h3>Chi Tiết Đơn Hàng</h3>
 
     <div>
         <h4>ID Đơn Hàng: @Model.Id</h4>
@@ -32,9 +34,10 @@
                     <td>@detail.Product.Name</td>
                     <td>@detail.Quantity</td>
                     <td>@detail.Price.ToString("N0") đ</td>
-                    <td>@(detail.Price * detail.Quantity).ToString("N0") đ</td>
+                    <td>@((detail.Price * detail.Quantity).ToString("C0", new CultureInfo("vi-VN")))</td>
                 </tr>
             }
         </tbody>
     </table>
+    <a asp-action="Index" class="btn btn-secondary">Về Danh Sách</a>
 </div>

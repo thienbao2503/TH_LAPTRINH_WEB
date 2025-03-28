@@ -5,6 +5,18 @@
       "PackagePath": "staticwebassets\\TH_LAP_TRINH_WEB.tx42q7zfos.bundle.scp.css"
     },
     {
+      "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\css\\admin.css",
+      "PackagePath": "staticwebassets\\css\\admin.css"
+    },
+    {
+      "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\css\\custom.css",
+      "PackagePath": "staticwebassets\\css\\custom.css"
+    },
+    {
+      "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\css\\product-detail.css",
+      "PackagePath": "staticwebassets\\css\\product-detail.css"
+    },
+    {
       "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
@@ -91,6 +103,10 @@
     {
       "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\images\\sp9.webp",
       "PackagePath": "staticwebassets\\images\\sp9.webp"
+    },
+    {
+      "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\js\\admin.js",
+      "PackagePath": "staticwebassets\\js\\admin.js"
     },
     {
       "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\js\\site.js",

@@ -1,0 +1,138 @@
+﻿@using TH_LAP_TRINH_WEB.Models
+@model Product
+
+@{
+    ViewData["Title"] = "Display";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/product-detail.css" asp-append-version="true" />
+
+<section class="section-product-detail">
+    <div class="container">
+        <div class="product-detail-grid">
+            <!-- Product Images -->
+            <div class="product-images">
+                <div class="main-image">
+                    <img src="/images/sp1.webp" alt="product main image" />
+                </div>
+                <div class="thumbnail-images">
+                    <img src="/images/sp1.webp" alt="thumbnail 1" class="active" />
+                    <img src="/images/sp2.webp" alt="thumbnail 2" />
+                    <img src="/images/sp3.webp" alt="thumbnail 3" />
+                    <img src="/images/sp4.webp" alt="thumbnail 4" />
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="product-info">
+                <h1>Innisfree Green Tea Seed Serum</h1>
+                <div class="price">520,000đ</div>
+
+                <!-- Product Actions -->
+                <div class="product-actions">
+                    <div class="quantity">
+                        <label>Số lượng:</label>
+                        <div class="quantity-selector">
+                            <button onclick="decreaseQuantity()">-</button>
+                            <input type="number" value="1" min="1" />
+                            <button onclick="increaseQuantity()">+</button>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button class="btn-add-cart">Thêm vào giỏ hàng</button>
+                        <button class="btn-buy-now">Mua ngay</button>
+                    </div>
+                </div>
+
+                <!-- Product Description -->
+                <div class="product-description">
+                    <h2>Mô tả sản phẩm</h2>
+                    <div class="description-content">
+                        <p>
+                            Tinh chất dưỡng da từ trà xanh giúp cấp ẩm và làm dịu da. Công thức chứa chiết xuất trà xanh
+                            organic
+                            từ đảo Jeju giàu amino acid...
+                        </p>
+                        <ul>
+                            <li>Dưỡng ẩm chuyên sâu</li>
+                            <li>Làm dịu da</li>
+                            <li>Cải thiện làn da</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Product Specifications -->
+                <div class="product-specs">
+                    <h2>Thông số sản phẩm</h2>
+                    <table>
+                        <tr>
+                            <td>Thương hiệu:</td>
+                            <td>Innisfree</td>
+                        </tr>
+                        <tr>
+                            <td>Xuất xứ:</td>
+                            <td>Hàn Quốc</td>
+                        </tr>
+                        <tr>
+                            <td>Dung tích:</td>
+                            <td>80ml</td>
+                        </tr>
+                        <tr>
+                            <td>Đối tượng:</td>
+                            <td>Mọi loại da</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Products -->
+<section class="section-related-products">
+    <div class="container">
+        <h2>Sản phẩm liên quan</h2>
+        <div class="related-products-grid">
+            <div class="item">
+                <a aria-label="link-product" href="./product-detail.html?id=2">
+                    <img src="/images/sp2.webp" height="200" width="200" alt="ảnh-sản-phẩm" />
+                </a>
+                <div class="detail">
+                    <h3><a href="./product-detail.html?id=2">Laneige Water Sleeping Mask</a></h3>
+                    <p>750,000đ</p>
+                </div>
+            </div>
+
+            <div class="item">
+                <a aria-label="link-product" href="./product-detail.html?id=3">
+                    <img src="/images/sp3.webp" height="565" width="565" alt="ảnh-sản-phẩm" />
+                </a>
+                <div class="detail">
+                    <h3><a href="./product-detail.html?id=3">Innisfree Volcanic Pore Clay Mask</a></h3>
+                    <p>280,000đ</p>
+                </div>
+            </div>
+
+            <div class="item">
+                <a aria-label="link-product" href="./product-detail.html?id=4">
+                    <img src="/images/sp4.webp" height="565" width="565" alt="ảnh-sản-phẩm" />
+                </a>
+                <div class="detail">
+                    <h3><a href="./product-detail.html?id=4">The Face Shop Rice Water Bright Cleansing Oil</a></h3>
+                    <p>450,000đ</p>
+                </div>
+            </div>
+
+            <div class="item">
+                <a aria-label="link-product" href="./product-detail.html?id=5">
+                    <img src="/images/sp5.webp" height="565" width="565" alt="ảnh-sản-phẩm" />
+                </a>
+                <div class="detail">
+                    <h3><a href="./product-detail.html?id=5">Mamonde Rose Water Toner</a></h3>
+                    <p>380,000đ</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

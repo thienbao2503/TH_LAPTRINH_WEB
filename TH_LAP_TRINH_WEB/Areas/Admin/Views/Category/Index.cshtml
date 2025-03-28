@@ -3,10 +3,10 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Views/_Layout.cshtml";
 }
 
-<div class="container">
+@* <div class="container-table">
     <div class="header-table">
         <h1>DS Danh Mục</h1>
 
@@ -48,3 +48,91 @@
         </tbody>
     </table>
 </div>
+ *@
+
+
+<div class="box-add">
+    <div class="box-list-button">
+        @* <button><i class="fi fi-rr-file-import"></i> Nhập dữ liệu</button> *@
+        @* <button><i class="fi fi-rr-file-export"></i> Xuất dữ liệu</button> *@
+    </div>
+    <a asp-area="Admin" asp-controller="Category" asp-action="Add">
+        <button class="btn-add"><i class="fi fi-rr-plus-small"></i> Thêm Danh Mục</button>
+    </a>
+
+</div>
+<div class="box-search">
+    <h2>DS Danh Mục</h2>
+    <div class="box-list-input">
+       
+        <input type="search" name="" placeholder="Nhập Tên tìm kiếm" id="">
+        <button class="btn-search">
+            <i class="fi fi-rr-search"></i>
+        </button>
+        <button class="btn-refresh">
+            <i class="fi fi-rr-refresh"></i>
+        </button>
+    </div>
+</div>
+<div class="box-table">
+    <table>
+        <thead>
+            @* <tr> *@
+            @*     <th class="box-checkbox"> *@
+            @*         <input type="checkbox" name="" id=""> *@
+            @*     </th> *@
+            @*     <th>STT</th> *@
+            @*     <th>Tên Sản Phẩm</th> *@
+            @*     <th>Giá</th> *@
+            @*     <th>Số Lượng</th> *@
+            @*     <th>Thành Tiền</th> *@
+            @*     <th>Tính Năng</th> *@
+            @* </tr> *@
+
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>Tính năng</th>
+            </tr>
+
+
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <div class="table_btn">
+                            <a href="@Url.Action("Display", new { id = item.Id })" class="btn-edit"><i class="fi fi-rr-overview"></i></a>
+                            <a href="@Url.Action("Update", new { id = item.Id })" class="btn-edit"><i class="fi fi-rr-pencil"></i></a>
+                            <a href="@Url.Action("Delete", new { id = item.Id })" class="btn-edit"><i class="fi fi-rr-trash"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+</div>
+@* <div class="box-pagination"> *@
+@*     <ul> *@
+@*         <li class="prev"><a href="#"><i class="fi fi-rr-angle-left"></i></a></li> *@
+@*         <li><a class="active" href="#">1</a></li> *@
+@*         <li><a href="#">2</a></li> *@
+@*         <li><a href="#">3</a></li> *@
+@*         <li><a href="#">4</a></li> *@
+@*         <li class="next"><a href="#"><i class="fi fi-rr-angle-right"></i></a></li> *@
+@*     </ul> *@
+@* </div> *@
+
