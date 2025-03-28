@@ -50,9 +50,13 @@
                             <a href="#">@product.Name</a>
                         </h3>
                         <p>@product.Price.ToString("N0") đ</p>
-                        <button class="btn-main add-to-cart" data-product-id="@product.Id">
-                            Thêm vào giỏ
-                        </button>
+                        <form asp-controller="ShoppingCart" asp-action="AddToCart" method="post">
+                            <input type="hidden" name="productId" value="@product.Id" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="btn-main add-to-cart" data-product-id="@product.Id">
+                                <i class="fi fi-rr-shopping-cart"></i> Thêm vào giỏ
+                            </button>
+                        </form>
                     </div>
                 </div>
             }

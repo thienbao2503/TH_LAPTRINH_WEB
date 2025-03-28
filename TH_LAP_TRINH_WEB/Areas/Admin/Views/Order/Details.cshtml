@@ -1,0 +1,40 @@
+﻿@model TH_LAP_TRINH_WEB.Models.Order
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<div class="container">
+    <h2>Chi Tiết Đơn Hàng</h2>
+
+    <div>
+        <h4>ID Đơn Hàng: @Model.Id</h4>
+        <p>Ngày Đặt: @Model.OrderDate.ToString("g")</p>
+        <p>Tổng Giá trị Đơn Hàng: @Model.TotalPrice.ToString("N0") đ</p>
+        <p>Địa Chỉ Giao Hàng: @Model.ShippingAddress</p>
+        <p>Ghi Chú Đơn Hàng: @Model.Notes</p>
+    </div>
+
+    <h3>DS Sản Phẩm Trong Đơn Hàng</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tên Sản Phẩn</th>
+                <th>Số Lượng</th>
+                <th>Giá Sản Phẩm</th>
+                <th>Tổng Giá Sản Phẩm</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detail in Model.OrderDetails)
+            {
+                <tr>
+                    <td>@detail.Product.Name</td>
+                    <td>@detail.Quantity</td>
+                    <td>@detail.Price.ToString("N0") đ</td>
+                    <td>@(detail.Price * detail.Quantity).ToString("N0") đ</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

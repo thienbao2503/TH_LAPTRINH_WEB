@@ -37,6 +37,7 @@ i {
 .navbar-nav {
     display: flex !important;
     flex-direction: row;
+    align-items : center;
     gap: 10px;
 }
 
@@ -192,9 +193,13 @@ main {
     /* animation: showNavbar 0.7s; */
 }
 
+.item-menu {
+    grid-column : 2 span / 2 span;
+}
+
 .navbar .box {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     align-items: center;
 }
 
@@ -1035,10 +1040,29 @@ footer .box {
     width: 100%;
 }
 
-/* animation */
-
-@keyframes showNavbar {
-    0% {
+.btn {
+    display : flex;
+    align-items : center;
+    justify-content : center;gap :4px
+}
+.nav-item.cart a, .btn-main.add-to-cart, .btn.btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    gap: 4px;
+    background-color: #fff;
+    border: 2px solid var(--primary-color-bold);
+    color: var(--primary-color-bold) !important;
+    border-radius: 8px;
+}
+    .nav-item.cart a:hover, .btn-main.add-to-cart:hover, .btn.btn-primary:hover {
+        background-color: var(--primary-color-bold);
+        color: white !important;
+    }
+    /* animation */
+    @keyframes showNavbar {
+        0% {
         transform: translateY(-67px);
     }
 

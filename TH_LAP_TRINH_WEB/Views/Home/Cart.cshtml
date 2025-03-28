@@ -7,34 +7,39 @@
     <h2>Giỏ hàng</h2>
     @if (!Model.Any())
     {
-            <p>Giỏ hàng trống</p>
-            <a href="/" class="btn-main">Tiếp tục mua sắm</a>
+        <p>Giỏ hàng trống</p>
+        <a href="/" class="btn-main">Tiếp tục mua sắm</a>
     }
     else
     {
-            <div class="cart-items">
-                @foreach (var item in Model)
-                {
-                        <div class="cart-item" data-product-id="@item.ProductId">
-                            <img src="@item.ImageUrl" alt="@item.ProductName" />
-                            <div class="item-details">
-                                <h3>@item.ProductName</h3>
-                                <p class="price">@item.Price.ToString("N0") đ</p>
-                                <div class="quantity-controls">
-                                    <button class="decrease">-</button>
-                                    <input type="number" value="@item.Quantity" min="1" class="quantity-input" />
-                                    <button class="increase">+</button>
-                                </div>
-                                <p class="subtotal">@item.Total.ToString("N0") đ</p>
-                                <button class="remove-item" onclick="removeFromCart(@item.ProductId)">Xóa</button>
-                            </div>
+        <div class="cart-items">
+            @foreach (var item in Model)
+            {
+                <div class="cart-item" data-product-id="@item.ProductId">
+                    <img src="@item.ImageUrl" alt="@item.ProductName" />
+                    <div class="item-details">
+                        <h3>@item.ProductName</h3>
+                        <p class="price">@item.Price.ToString("N0") đ</p>
+                        <div class="quantity-controls">
+                            <button class="decrease">-</button>
+                            <input type="number" value="@item.Quantity" min="1" class="quantity-input" />
+                            <button class="increase">+</button>
                         </div>
-                }
-            </div>
-            <div class="cart-summary">
-                <p>Tổng tiền: <span>@Model.Sum(i => i.Total).ToString("N0") đ</span></p>
-                <button class="btn-main checkout">Thanh toán</button>
-            </div>
+                        <p class="subtotal">@item.Total.ToString("N0") đ</p>
+                        <button class="btn btn-danger" onclick="removeFromCart(@item.ProductId)">
+                            <i class="fi fi-rr-trash"></i> Xóa
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="cart-summary">
+            <p>Tổng tiền: <span>@Model.Sum(i => i.Total).ToString("N0") đ</span></p>
+            <form asp-controller="ShoppingCart" asp-action="Checkout" method="get">
+                <button type="submit" class="btn-main checkout btn btn-primary">
+                    <i class="fi fi-rr-payroll-check"></i> Thanh toán
+                </button>
+            </form>
+        </div>
     }
 </div>
-                                                                                                                                                            

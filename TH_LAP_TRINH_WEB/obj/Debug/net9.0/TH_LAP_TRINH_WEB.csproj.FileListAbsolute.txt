@@ -1213,4 +1213,5 @@ D:\code\TH_LAPTRINH_WEB\TH_LAP_TRINH_WEB\obj\Debug\net9.0\scopedcss\Areas\Admin\
 D:\code\TH_LAPTRINH_WEB\TH_LAP_TRINH_WEB\obj\Debug\net9.0\compressed\b0b4is05p4-tx42q7zfos.gz
 D:\code\TH_LAPTRINH_WEB\TH_LAP_TRINH_WEB\obj\Debug\net9.0\compressed\vkqw05c1oz-tx42q7zfos.gz
 D:\code\TH_LAPTRINH_WEB\TH_LAP_TRINH_WEB\obj\Debug\net9.0\compressed\e4jfhdui5j-s6zvhk3cq2.gz
-D:\code\TH_LAPTRINH_WEB\TH_LAP_TRINH_WEB\obj\Debug\net9.0\compressed\tzhhhakjgu-0i1q1nymsh.gz
+D:\code\TH_LAPTRINH_WEB\TH_LAP_TRINH_WEB\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+D:\code\TH_LAPTRINH_WEB\TH_LAP_TRINH_WEB\obj\Debug\net9.0\compressed\tzhhhakjgu-fetar1tj5p.gz

@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TH_LAP_TRINH_WEB")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+118bfd070935e8c389a450691f756e37eb8216d9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+96397b6c9a07f3ec539a5e9f1d2ceb0ec5b80ecd")]
 [assembly: System.Reflection.AssemblyProductAttribute("TH_LAP_TRINH_WEB")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TH_LAP_TRINH_WEB")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

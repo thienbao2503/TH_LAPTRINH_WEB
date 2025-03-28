@@ -62,7 +62,7 @@
                             <h1 class="logo-name">Thiên Bảo <span>2280600181</span></h1>
                             </a>
           </div>
-          <div class="item">
+          <div class="item item-menu">
             <ul class="menu-v1">
                 <li class="item-v1">
                     <a aria-label="trang-chu" asp-area="" asp-controller="Home" asp-action="Index">Trang Chủ</a>
@@ -73,9 +73,12 @@
                 <li class="item-v1">
                     <a asp-area="Admin" asp-controller="Category" asp-action="Index">Danh Mục</a>
                 </li>
+                            <li class="item-v1">
+                                <a asp-area="Admin" asp-controller="Order" asp-action="Index">Đơn hàng</a>
+                            </li>
             </ul>
           </div>
-          <div class="item">
+          <div class="item item-menu">
 			<partial name="_LoginPartial" />
             @* <div class="wrapper"> *@
             @*   <button type="button" aria-label="search" onclick="handleShowModal('modal-search')"><i *@
