@@ -22,11 +22,11 @@
                         <p class="price">@item.Price.ToString("N0") đ</p>
                         <div class="quantity-controls">
                             <button class="decrease">-</button>
-                            <input type="number" value="@item.Quantity" min="1" class="quantity-input" />
+                            <input type="number" value="@item.Quantity" min="1" class="quantity-input" data-product-id="@item.ProductId" />
                             <button class="increase">+</button>
                         </div>
                         <p class="subtotal">@item.Total.ToString("N0") đ</p>
-                        <button class="btn btn-danger" onclick="removeFromCart(@item.ProductId)">
+                        <button class="btn btn-danger remove-item" data-product-id="@item.ProductId">
                             <i class="fi fi-rr-trash"></i> Xóa
                         </button>
                     </div>
@@ -43,3 +43,70 @@
         </div>
     }
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".increase").forEach(btn => {
+            btn.addEventListener("click", function () {
+                let input = this.closest(".quantity-controls").querySelector(".quantity-input");
+                let productId = input.dataset.productId;
+                let newQuantity = parseInt(input.value) + 1;
+                input.value = newQuantity;
+                updateCart(productId, newQuantity);
+            });
+        });
+
+        document.querySelectorAll(".decrease").forEach(btn => {
+            btn.addEventListener("click", function () {
+                let input = this.closest(".quantity-controls").querySelector(".quantity-input");
+                let productId = input.dataset.productId;
+                let newQuantity = Math.max(1, parseInt(input.value) - 1);
+                input.value = newQuantity;
+                updateCart(productId, newQuantity);
+            });
+        });
+
+        document.querySelectorAll(".quantity-input").forEach(input => {
+            input.addEventListener("change", function () {
+                let productId = this.dataset.productId;
+                let newQuantity = parseInt(this.value);
+                if (isNaN(newQuantity) || newQuantity < 1) {
+                    newQuantity = 1;
+                }
+                this.value = newQuantity;
+                updateCart(productId, newQuantity);
+            });
+        });
+
+        document.querySelectorAll(".remove-item").forEach(btn => {
+            btn.addEventListener("click", function () {
+                let productId = this.dataset.productId;
+                removeFromCart(productId);
+            });
+        });
+
+        function updateCart(productId, quantity) {
+            fetch("/ShoppingCart/UpdateCart", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ productId, quantity })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) location.reload();
+            });
+        }
+
+        function removeFromCart(productId) {
+            fetch("/ShoppingCart/RemoveFromCart", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ productId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) location.reload();
+            });
+        }
+    });
+</script>

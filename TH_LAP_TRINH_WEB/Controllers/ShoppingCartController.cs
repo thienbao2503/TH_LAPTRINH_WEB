@@ -78,17 +78,33 @@ namespace TH_LAP_TRINH_WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult RemoveFromCart(int productId)
+        public IActionResult UpdateCart([FromBody] CartUpdateModel model)
         {
-            _cartService.RemoveItem(productId);
-            return RedirectToAction("Cart");
+            if (model == null || model.ProductId <= 0 || model.Quantity <= 0)
+            {
+                return Json(new { success = false, message = "Dữ liệu không hợp lệ" });
+            }
+
+            _cartService.UpdateQuantity(model.ProductId, model.Quantity);
+            return Json(new { success = true });
         }
 
         [HttpPost]
-        public IActionResult UpdateCart(int productId, int quantity)
+        public IActionResult RemoveFromCart([FromBody] CartUpdateModel model)
         {
-            _cartService.UpdateQuantity(productId, quantity);
-            return RedirectToAction("Cart");
+            if (model == null || model.ProductId <= 0)
+            {
+                return Json(new { success = false, message = "Dữ liệu không hợp lệ" });
+            }
+
+            _cartService.RemoveItem(model.ProductId);
+            return Json(new { success = true });
+        }
+
+        public class CartUpdateModel
+        {
+            public int ProductId { get; set; }
+            public int Quantity { get; set; }
         }
     }
 }
