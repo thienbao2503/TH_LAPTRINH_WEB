@@ -43,7 +43,7 @@ namespace TH_LAP_TRINH_WEB.Services
                     ProductName = product.Name,
                     Price = product.Price,
                     Quantity = quantity,
-                    ImageUrl = product.ImageUrl
+                    ImageUrl = product.Images.FirstOrDefault().Url
                 });
             }
 

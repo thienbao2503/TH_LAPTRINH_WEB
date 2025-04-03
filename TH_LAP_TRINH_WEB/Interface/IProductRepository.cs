@@ -9,5 +9,9 @@ namespace TH_LAP_TRINH_WEB.Interface
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
         Task DeleteAsync(int id);
+
+        Task<List<ProductImage>> GetProductImagesByProductIdAsync(int productId);
+        Task DeleteProductImagesAsync(List<ProductImage> images);
+        Task<IEnumerable<Product>> GetRelatedProductsAsync(int categoryId);
     }
 }

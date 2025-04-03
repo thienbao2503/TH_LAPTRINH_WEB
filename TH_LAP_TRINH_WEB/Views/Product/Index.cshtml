@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" href="~/css/product-detail.css" asp-append-version="true" />
 
-<section class="section-product-detail">
+@* <section class="section-product-detail">
     <div class="container">
         <div class="product-detail-grid">
             <!-- Product Images -->
@@ -87,6 +87,78 @@
             </div>
         </div>
     </div>
+</section> *@
+
+<section class="section-product-detail">
+    <div class="container">
+        <div class="product-detail-grid">
+            <!-- Product Images -->
+            <div class="product-images">
+                <div class="main-image">
+                    <img src="@Model.Images.FirstOrDefault()?.Url" alt="Product Main Image" />
+                </div>
+                <div class="thumbnail-images">
+                    @foreach (var image in Model.Images)
+                    {
+                        <img src="@image.Url" alt="Thumbnail Image" class="thumbnail" />
+                    }
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="product-info">
+                <h1>@Model.Name</h1>
+                <div class="price">@Model.Price.ToString("C0")</div>
+
+                <!-- Product Actions -->
+                <div class="product-actions">
+                    <div class="quantity">
+                        <label>Số lượng:</label>
+                        <div class="quantity-selector">
+                            <button onclick="decreaseQuantity()">-</button>
+                            <input type="number" value="1" min="1" />
+                            <button onclick="increaseQuantity()">+</button>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button class="btn-add-cart" onclick="addToCart(@Model.Id)">Thêm vào giỏ hàng</button>
+                        @* <button class="btn-buy-now" onclick="buyNow(@Model.Id)">Mua ngay</button> *@
+                    </div>
+                </div>
+
+                <!-- Product Description -->
+                <div class="product-description">
+                    <h2>Mô tả sản phẩm</h2>
+                    <div class="description-content">
+                        <p>@Model.Description</p>
+                    </div>
+                </div>
+
+                <!-- Product Specifications -->
+                @* <div class="product-specs">
+                    <h2>Thông số sản phẩm</h2>
+                    <table>
+                        <tr>
+                            <td>Thương hiệu:</td>
+                             <td>@Model.Brand</td> 
+                        </tr>
+                        <tr>
+                            <td>Xuất xứ:</td>
+                             <td>@Model.Origin</td> 
+                        </tr>
+                        <tr>
+                            <td>Dung tích:</td>
+                             <td>@Model.Volume</td> 
+                        </tr>
+                        <tr>
+                            <td>Đối tượng:</td>
+                             <td>@Model.Target</td> 
+                        </tr>
+                    </table>
+                </div> *@
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- Related Products -->
@@ -94,45 +166,84 @@
     <div class="container">
         <h2>Sản phẩm liên quan</h2>
         <div class="related-products-grid">
-            <div class="item">
-                <a aria-label="link-product" href="./product-detail.html?id=2">
-                    <img src="/images/sp2.webp" height="200" width="200" alt="ảnh-sản-phẩm" />
-                </a>
-                <div class="detail">
-                    <h3><a href="./product-detail.html?id=2">Laneige Water Sleeping Mask</a></h3>
-                    <p>750,000đ</p>
+            @foreach (var relatedProduct in ViewBag.RelatedProducts as IEnumerable<Product>)
+            {
+                <div class="item">
+                    <a aria-label="link-product" href="@Url.Action("Index", "Product", new { id = relatedProduct.Id })">
+                        <img src="@relatedProduct.Images.FirstOrDefault()?.Url" height="200" width="200" alt="ảnh-sản-phẩm" />
+                    </a>
+                    <div class="detail">
+                        <h3><a href="@Url.Action("Index", "Product", new { id = relatedProduct.Id })">@relatedProduct.Name</a></h3>
+                        <p>@relatedProduct.Price.ToString("C0")</p>
+                    </div>
                 </div>
-            </div>
-
-            <div class="item">
-                <a aria-label="link-product" href="./product-detail.html?id=3">
-                    <img src="/images/sp3.webp" height="565" width="565" alt="ảnh-sản-phẩm" />
-                </a>
-                <div class="detail">
-                    <h3><a href="./product-detail.html?id=3">Innisfree Volcanic Pore Clay Mask</a></h3>
-                    <p>280,000đ</p>
-                </div>
-            </div>
-
-            <div class="item">
-                <a aria-label="link-product" href="./product-detail.html?id=4">
-                    <img src="/images/sp4.webp" height="565" width="565" alt="ảnh-sản-phẩm" />
-                </a>
-                <div class="detail">
-                    <h3><a href="./product-detail.html?id=4">The Face Shop Rice Water Bright Cleansing Oil</a></h3>
-                    <p>450,000đ</p>
-                </div>
-            </div>
-
-            <div class="item">
-                <a aria-label="link-product" href="./product-detail.html?id=5">
-                    <img src="/images/sp5.webp" height="565" width="565" alt="ảnh-sản-phẩm" />
-                </a>
-                <div class="detail">
-                    <h3><a href="./product-detail.html?id=5">Mamonde Rose Water Toner</a></h3>
-                    <p>380,000đ</p>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
+
+<script>
+    document.querySelectorAll('.thumbnail').forEach(function (thumbnail) {
+        thumbnail.addEventListener('click', function () {
+            // Lấy ảnh thu nhỏ đã click
+            var mainImage = document.querySelector('.main-image img');
+            mainImage.src = this.src;
+        });
+    });
+
+     function increaseQuantity() {
+        var quantityInput = document.querySelector('.quantity-selector input');
+        var currentQuantity = parseInt(quantityInput.value);
+        quantityInput.value = currentQuantity + 1;
+    }
+
+    function decreaseQuantity() {
+        var quantityInput = document.querySelector('.quantity-selector input');
+        var currentQuantity = parseInt(quantityInput.value);
+        if (currentQuantity > 1) {
+            quantityInput.value = currentQuantity - 1;
+        }
+    }
+        function addToCart(productId) {
+        var quantityInput = document.querySelector('.quantity-selector input');
+        var quantity = parseInt(quantityInput.value);
+
+        // Gửi yêu cầu POST bằng AJAX
+        fetch('/Home/AddToCart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+            },
+            body: JSON.stringify({
+                productId: productId,
+                quantity: quantity
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Đã thêm sản phẩm vào giỏ hàng!');
+                // Cập nhật giỏ hàng nếu cần
+                updateCartSummary();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            alert('Đã xảy ra lỗi. Vui lòng thử lại.');
+        });
+    }
+
+    function updateCartSummary() {
+        fetch('/Home/GetCartSummary')
+        .then(response => response.json())
+        .then(data => {
+            // Cập nhật thông tin giỏ hàng trên giao diện (ví dụ: số lượng và tổng giá trị giỏ hàng)
+            // document.querySelector('#cart-summary').innerText = `Tổng cộng: ${data.total}đ`;
+        })
+        .catch(error => {
+            console.log('Lỗi khi cập nhật giỏ hàng:', error);
+        });
+    }
+</script>

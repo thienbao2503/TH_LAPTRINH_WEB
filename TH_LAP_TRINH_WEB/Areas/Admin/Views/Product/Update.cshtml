@@ -33,21 +33,32 @@
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
 
-                <!-- Hiển thị ảnh hiện tại -->
-                @if (!string.IsNullOrEmpty(Model.ImageUrl))
-                {
-                    <div class="form-group">
-                        <label>Ảnh Demo:</label>
-                        <br />
-                        <img id="previewImage" src="@Model.ImageUrl" alt="Product Image" style="max-width: 200px; height: auto; border: 1px solid #ccc; padding: 5px;" />
-                    </div>
-                }
-
                 <!-- Input để tải ảnh mới -->
                 <div class="form-group">
-                    <label for="imageUrl">Upload New Image:</label>
-                    <input type="file" name="imageUrl" id="imageUrl" class="form-control" accept="image/*" />
+                    <label for="images">Upload Images (Max 5 images):</label>
+                    <input type="file" name="images" id="images" class="form-control" accept="image/*" multiple />
                 </div>
+
+                <!-- Hiển thị ảnh mới được chọn -->
+                <div class="form-group" id="newImagesSection" style="display: none;">
+                    <label>New Images:</label>
+                    <div id="previewImageContainer"></div> <!-- Chứa các ảnh được chọn -->
+                </div>
+
+                @if (Model.Images != null && Model.Images.Count > 0)
+                {
+                    <div class="form-group">
+                        <label>Current Images:</label>
+                        <ul>
+                            @foreach (var image in Model.Images)
+                            {
+                                <li>
+                                    <img src="@image.Url" alt="Product Image" style="max-width: 100px; height: auto; border: 1px solid #ccc; padding: 5px;" />
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
 
                 <div class="form-group">
                     <label asp-for="CategoryId" class="control-label"></label>
@@ -69,28 +80,55 @@
 
 @section Scripts {
     <script>
-        // document.getElementById("deleteImageCheckbox").addEventListener("change", function () {
-        //     var imageUploadSection = document.getElementById("imageUploadSection");
-        //     imageUploadSection.style.display = this.checked ? "block" : "none";
-        // });
+        document.getElementById("images").addEventListener("change", function (event) {
+            var previewContainer = document.getElementById("previewImageContainer");
+            var newImagesSection = document.getElementById("newImagesSection");
+            var currentImagesSection = document.getElementById("currentImagesSection");
 
-        document.getElementById("imageUrl").addEventListener("change", function (event) {
-            var preview = document.getElementById("previewImage");
-            var file = event.target.files[0];
+            // Lấy danh sách các file ảnh đã chọn
+            var files = event.target.files;
+            if (files && files.length > 0) {
+                // Ẩn nhóm ảnh cũ
+                if (currentImagesSection) {
+                    currentImagesSection.style.display = "none";
+                }
 
-            if (file) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    preview.src = e.target.result;
-                    preview.style.display = "block";
-                };
-                reader.readAsDataURL(file);
+                // Hiển thị nhóm ảnh mới được chọn
+                if (newImagesSection) {
+                    newImagesSection.style.display = "block";
+                }
+
+                // Xóa nội dung của preview cũ trước khi hiển thị ảnh mới
+                previewContainer.innerHTML = "";
+
+                // Hiển thị tất cả các ảnh mới được chọn
+                Array.from(files).forEach(function(file) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var img = document.createElement("img");
+                        img.src = e.target.result;
+                        img.style.maxWidth = "100px";
+                        img.style.height = "auto";
+                        img.style.border = "1px solid #ccc";
+                        img.style.padding = "5px";
+                        previewContainer.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                });
             } else {
-                preview.style.display = "none";
+                // Nếu không có ảnh được chọn, hiển thị lại ảnh cũ
+                if (currentImagesSection) {
+                    currentImagesSection.style.display = "block";
+                }
+                previewContainer.innerHTML = "";  // Ẩn ảnh đã chọn
+                if (newImagesSection) {
+                    newImagesSection.style.display = "none";  // Ẩn nhóm ảnh mới nếu không có ảnh được chọn
+                }
             }
         });
-
     </script>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
 

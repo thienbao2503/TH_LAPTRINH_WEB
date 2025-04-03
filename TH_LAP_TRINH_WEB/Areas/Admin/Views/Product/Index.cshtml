@@ -41,23 +41,12 @@
 
     </div>
 </div>
-box-table">
-
-ad>
-@* <tr> *@
-@*     <th class="box-checkbox"> *@
-@*         <input type="checkbox" name="" id=""> *@
-@*     </th> *@
-@*     <th>STT</th> *@
-@*     <th>Tên Sản Phẩm</th> *@
-@*     <th>Giá</th> *@
-@*     <th>Số Lượng</th> *@
-@*     <th>Thành Tiền</th> *@
-@*     <th>Tính Năng</th> *@
-@* </tr> *@
-
-            <tr> 
-        <th>
+<div class="box-table">
+    
+    <table>
+        <thead>
+                <tr> 
+                <th>
                @Html.DisplayNameFor(model => model.Id) 
                 </th> 
                <th>
@@ -106,13 +95,6 @@ ad>
                          @Html.DisplayFor(modelItem => item.Category.Name) 
                      </td> 
                      <td> 
-                    @*      <div class="table_btn">  *@
-                    @*          @Html.ActionLink("Cập Nhật", "Update", new { id = item.Id }) |  *@
-                    @*         @Html.ActionLink("Chi tiết", "Display", new { id = item.Id }) |  *@
-                    @*        @Html.ActionLink("Xóa", "Delete", new { id = item.Id })  *@
-                    @*    </div>  *@
-                    @*    <button class="btn-edit"><i class="fi fi-rr-pencil"></i></button>  *@
-                    @* <button class="btn-delete"><i class="fi fi-rr-trash"></i></button> *@
                         <div class="table_btn">
                             <a href="@Url.Action("Display", new { id = item.Id })" class="btn-edit"><i class="fi fi-rr-overview"></i></a>
                             <a href="@Url.Action("Update", new { id = item.Id })" class="btn-edit"><i class="fi fi-rr-pencil"></i></a>
@@ -122,35 +104,10 @@ ad>
                  </tr> 
                  }
 
-            @* <tr>*@
-            @*     <td> *@
-            @*         <input type="checkbox" name="" id=""> *@
-            @*     </td> *@
-            @*     <td>1</td> *@
-            @*     <td>Product 1</td> *@
-            @*     <td>10000</td> *@
-            @*     <td>10</td> *@
-            @*     <td>100000</td> *@
-            @*     <td> *@
-            @*         <button class="btn-edit"><i class="fi fi-rr-pencil"></i></button> *@
-            @*         <button class="btn-delete"><i class="fi fi-rr-trash"></i></button> *@
-            @*     </td> *@
-            @* </tr> *@
-             
             
         </tbody>
     </table>
 </div>
-@* <div class="box-pagination"> *@
-@*     <ul> *@
-@*         <li class="prev"><a href="#"><i class="fi fi-rr-angle-left"></i></a></li> *@
-@*         <li><a class="active" href="#">1</a></li> *@
-@*         <li><a href="#">2</a></li> *@
-@*         <li><a href="#">3</a></li> *@
-@*         <li><a href="#">4</a></li> *@
-@*         <li class="next"><a href="#"><i class="fi fi-rr-angle-right"></i></a></li> *@
-@*     </ul> *@
-@* </div> *@
 
 
 

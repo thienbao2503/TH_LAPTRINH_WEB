@@ -10,7 +10,7 @@ namespace TH_LAP_TRINH_WEB.Models
         [Display(Name = "Tên sản phẩm")]
         public string Name { get; set; }
 
-        [Range(10000, 10000000.00)]
+        [Range(10000, 100000000)]
         [Display(Name = "Giá sản phẩm")]
         public decimal Price { get; set; }
 

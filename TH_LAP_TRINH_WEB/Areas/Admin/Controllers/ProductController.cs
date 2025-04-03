@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using TH_LAP_TRINH_WEB.Interface;
 using TH_LAP_TRINH_WEB.Models;
 
@@ -33,18 +34,25 @@ namespace TH_LAP_TRINH_WEB.Areas.Admin.Controllers
             return View(new Product()); // Pass empty product model
         }
         // Xử lý thêm sản phẩm mới
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add([Bind("Name,Price,Description,CategoryId")] Product product, IFormFile imageUrl)
+        public async Task<IActionResult> Add([Bind("Name,Price,Description,CategoryId")] Product product, List<IFormFile> images)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    if (imageUrl != null && imageUrl.Length > 0)
+                    if (images != null && images.Count > 0)
                     {
-                        product.ImageUrl = await SaveImage(imageUrl);
+                        product.Images = new List<ProductImage>();
+                        foreach (var image in images)
+                        {
+                            string imageUrl = await SaveImage(image);
+                            product.Images.Add(new ProductImage { Url = imageUrl });
+                        }
                     }
+
                     await _productRepository.AddAsync(product);
                     return RedirectToAction(nameof(Index));
                 }
@@ -54,44 +62,59 @@ namespace TH_LAP_TRINH_WEB.Areas.Admin.Controllers
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             var categories = await _categoryRepository.GetAllAsync();
             ViewBag.Categories = new SelectList(categories, "Id", "Name", product.CategoryId);
             return View(product);
         }
-        // Viết thêm hàm SaveImage (tham khảo bài 02)
+
+        //private async Task<string> SaveImage(IFormFile image)
+        //{
+        //    var imagesFolder = Path.Combine("wwwroot/images");
+        //    if (!Directory.Exists(imagesFolder))
+        //    {
+        //        Directory.CreateDirectory(imagesFolder);
+        //    }
+
+        //    var existingFiles = Directory.GetFiles(imagesFolder, "IMG*.jpg");
+        //    int nextId = existingFiles.Select(f => int.TryParse(Path.GetFileNameWithoutExtension(f).Substring(3), out int num) ? num : 0).DefaultIfEmpty(0).Max() + 1;
+        //    string newFileName = $"IMG{nextId:D5}.jpg";
+        //    var savePath = Path.Combine(imagesFolder, newFileName);
+
+        //    using (var fileStream = new FileStream(savePath, FileMode.Create))
+        //    {
+        //        await image.CopyToAsync(fileStream);
+        //    }
+
+        //    return "/images/" + newFileName;
+        //}
+
         private async Task<string> SaveImage(IFormFile image)
         {
-            // Đường dẫn thư mục lưu ảnh
             var imagesFolder = Path.Combine("wwwroot/images");
-
-            // Nếu thư mục chưa tồn tại, tạo mới
             if (!Directory.Exists(imagesFolder))
             {
                 Directory.CreateDirectory(imagesFolder);
             }
 
-            // Lấy danh sách file trong thư mục theo định dạng IMGxxxx
+            // Get all existing images to generate a new unique name
             var existingFiles = Directory.GetFiles(imagesFolder, "IMG*.jpg");
+            int nextId = existingFiles.Select(f => int.TryParse(Path.GetFileNameWithoutExtension(f).Substring(3), out int num) ? num : 0)
+                                      .DefaultIfEmpty(0)
+                                      .Max() + 1;
 
-            // Xác định ID tiếp theo
-            int nextId = existingFiles.Length + 1;
-
-            // Sinh tên file mới với độ dài 4 chữ số (IMG0001, IMG0002, ...)
-            string newFileName = $"IMG{nextId:D4}.jpg";
-
-            // Đường dẫn lưu file
+            // Create a new filename with a padded number (IMG00001.jpg)
+            string newFileName = $"IMG{nextId:D5}.jpg";
             var savePath = Path.Combine(imagesFolder, newFileName);
 
-            // Lưu ảnh
+            // Save the image to disk
             using (var fileStream = new FileStream(savePath, FileMode.Create))
             {
                 await image.CopyToAsync(fileStream);
             }
 
-            // Trả về đường dẫn ảnh để lưu vào database
             return "/images/" + newFileName;
         }
+
 
         // Hiển thị thông tin chi tiết sản phẩm
         public async Task<IActionResult> Display(int id)
@@ -117,10 +140,61 @@ namespace TH_LAP_TRINH_WEB.Areas.Admin.Controllers
             return View(product);
         }
         // Xử lý cập nhật sản phẩm
+        //[HttpPost]
+        //public async Task<IActionResult> Update(int id, Product product, IFormFile imageUrl)
+        //{
+        //    ModelState.Remove("ImageUrl"); // Bỏ qua xác thực ModelState cho ImageUrl
+
+        //    if (id != product.Id)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        var existingProduct = await _productRepository.GetByIdAsync(id);
+        //        if (existingProduct == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        if (imageUrl != null)
+        //        {
+        //            // Xóa ảnh cũ nếu có
+        //            if (!string.IsNullOrEmpty(existingProduct.ImageUrl))
+        //            {
+        //                var oldImagePath = Path.Combine("wwwroot", existingProduct.ImageUrl.TrimStart('/'));
+        //                if (System.IO.File.Exists(oldImagePath))
+        //                {
+        //                    System.IO.File.Delete(oldImagePath);
+        //                }
+        //            }
+
+        //            // Lưu ảnh mới
+        //            existingProduct.ImageUrl = await SaveImage(imageUrl);
+        //        }
+
+        //        // Cập nhật thông tin sản phẩm
+        //        existingProduct.Name = product.Name;
+        //        existingProduct.Price = product.Price;
+        //        existingProduct.Description = product.Description;
+        //        existingProduct.CategoryId = product.CategoryId;
+
+        //        await _productRepository.UpdateAsync(existingProduct);
+
+        //        return RedirectToAction(nameof(Index));
+        //    }
+
+        //    var categories = await _categoryRepository.GetAllAsync();
+        //    ViewBag.Categories = new SelectList(categories, "Id", "Name");
+        //    return View(product);
+        //}
+
         [HttpPost]
-        public async Task<IActionResult> Update(int id, Product product, IFormFile imageUrl)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(int id, Product product, List<IFormFile> images)
         {
-            ModelState.Remove("ImageUrl"); // Bỏ qua xác thực ModelState cho ImageUrl
+            ModelState.Remove("ImageUrl"); // Ignore validation for ImageUrl
 
             if (id != product.Id)
             {
@@ -135,23 +209,38 @@ namespace TH_LAP_TRINH_WEB.Areas.Admin.Controllers
                     return NotFound();
                 }
 
-                if (imageUrl != null)
+                // Handle new images
+                if (images != null && images.Count > 0)
                 {
-                    // Xóa ảnh cũ nếu có
-                    if (!string.IsNullOrEmpty(existingProduct.ImageUrl))
+                    // Check image count limit
+                    if (images.Count > 5)
                     {
-                        var oldImagePath = Path.Combine("wwwroot", existingProduct.ImageUrl.TrimStart('/'));
+                        ModelState.AddModelError("", "Bạn không thể tải lên quá 5 hình ảnh.");
+                        return View(product);
+                    }
+
+                    // Delete old images from the file system
+                    foreach (var image in existingProduct.Images)
+                    {
+                        var oldImagePath = Path.Combine("wwwroot", image.Url.TrimStart('/'));
                         if (System.IO.File.Exists(oldImagePath))
                         {
                             System.IO.File.Delete(oldImagePath);
                         }
                     }
 
-                    // Lưu ảnh mới
-                    existingProduct.ImageUrl = await SaveImage(imageUrl);
+                    // Clear existing images in database
+                    existingProduct.Images.Clear();
+
+                    // Save new images and update the database
+                    foreach (var image in images)
+                    {
+                        string imageUrl = await SaveImage(image);
+                        existingProduct.Images.Add(new ProductImage { Url = imageUrl });
+                    }
                 }
 
-                // Cập nhật thông tin sản phẩm
+                // Update product information (non-image fields)
                 existingProduct.Name = product.Name;
                 existingProduct.Price = product.Price;
                 existingProduct.Description = product.Description;
@@ -162,10 +251,12 @@ namespace TH_LAP_TRINH_WEB.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            // Load categories for the dropdown
             var categories = await _categoryRepository.GetAllAsync();
             ViewBag.Categories = new SelectList(categories, "Id", "Name");
             return View(product);
         }
+
         // Hiển thị form xác nhận xóa sản phẩm
         public async Task<IActionResult> Delete(int id)
         {
@@ -186,19 +277,31 @@ namespace TH_LAP_TRINH_WEB.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            // Xóa ảnh nếu tồn tại
+            var productImages = await _productRepository.GetProductImagesByProductIdAsync(id);
+            if (productImages.Any())
+            {
+                foreach (var image in productImages)
+                {
+                    var imagePath = Path.Combine("wwwroot", image.Url.TrimStart('/'));
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+                }
+
+                await _productRepository.DeleteProductImagesAsync(productImages);
+            }
+
             if (!string.IsNullOrEmpty(product.ImageUrl))
             {
-                var imagePath = Path.Combine("wwwroot", product.ImageUrl.TrimStart('/'));
-                if (System.IO.File.Exists(imagePath))
+                var mainImagePath = Path.Combine("wwwroot", product.ImageUrl.TrimStart('/'));
+                if (System.IO.File.Exists(mainImagePath))
                 {
-                    System.IO.File.Delete(imagePath);
+                    System.IO.File.Delete(mainImagePath);
                 }
             }
 
-            // Xóa sản phẩm khỏi database
             await _productRepository.DeleteAsync(id);
-
             return RedirectToAction(nameof(Index));
         }
 

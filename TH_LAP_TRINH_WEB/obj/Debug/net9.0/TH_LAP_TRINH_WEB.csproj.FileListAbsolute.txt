@@ -1218,3 +1218,4 @@ D:\code\TH_LAPTRINH_WEB\TH_LAP_TRINH_WEB\obj\Debug\net9.0\compressed\weeluubun4-
 D:\code\TH_LAPTRINH_WEB\TH_LAP_TRINH_WEB\obj\Debug\net9.0\compressed\t9v1mnmaug-okj5ykrorx.gz
 D:\code\TH_LAPTRINH_WEB\TH_LAP_TRINH_WEB\obj\Debug\net9.0\compressed\6wj5fw8alz-2wl59helce.gz
 D:\code\TH_LAPTRINH_WEB\TH_LAP_TRINH_WEB\obj\Debug\net9.0\compressed\ij6jko62xn-vx5da72ael.gz
+D:\code\TH_LAPTRINH_WEB\TH_LAP_TRINH_WEB\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
