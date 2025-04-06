@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TH_LAP_TRINH_WEB.Interface;
 using TH_LAP_TRINH_WEB.Models;
@@ -53,6 +53,7 @@ namespace TH_LAP_TRINH_WEB.Controllers
             if (product == null)
                 return Json(new { success = false, message = "Product not found" });
 
+            // Thêm sản phẩm vào giỏ hàng thông qua CartService
             _cartService.AddItem(product, request.Quantity);
             return Json(new { success = true, cartTotal = _cartService.GetTotal() });
         }

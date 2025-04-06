@@ -29,7 +29,7 @@ namespace TH_LAP_TRINH_WEB.Controllers
             relatedProducts = relatedProducts.Where(p => p.Id != product.Id).ToList(); // Loại trừ sản phẩm hiện tại
 
             // Truyền sản phẩm hiện tại và sản phẩm liên quan vào view
-            ViewBag.RelatedProducts = relatedProducts;
+            ViewBag.RelatedProducts = relatedProducts ?? new List<Product>(); // Fallback to an empty list if null
 
             return View(product);
         }

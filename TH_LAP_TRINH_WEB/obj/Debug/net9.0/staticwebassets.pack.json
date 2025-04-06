@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\admin.css"
     },
     {
+      "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\css\\category.css",
+      "PackagePath": "staticwebassets\\css\\category.css"
+    },
+    {
       "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\css\\custom.css",
       "PackagePath": "staticwebassets\\css\\custom.css"
     },
@@ -45,6 +49,22 @@
       "PackagePath": "staticwebassets\\images\\IMG00010.jpg"
     },
     {
+      "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\images\\IMG00011.jpg",
+      "PackagePath": "staticwebassets\\images\\IMG00011.jpg"
+    },
+    {
+      "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\images\\IMG00012.jpg",
+      "PackagePath": "staticwebassets\\images\\IMG00012.jpg"
+    },
+    {
+      "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\images\\IMG00013.jpg",
+      "PackagePath": "staticwebassets\\images\\IMG00013.jpg"
+    },
+    {
+      "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\images\\IMG00014.jpg",
+      "PackagePath": "staticwebassets\\images\\IMG00014.jpg"
+    },
+    {
       "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\images\\IMG0002.jpg",
       "PackagePath": "staticwebassets\\images\\IMG0002.jpg"
     },
@@ -67,6 +87,10 @@
     {
       "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\images\\IMG727ae6e8.jpg",
       "PackagePath": "staticwebassets\\images\\IMG727ae6e8.jpg"
+    },
+    {
+      "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\images\\collection_banner.webp",
+      "PackagePath": "staticwebassets\\images\\collection_banner.webp"
     },
     {
       "Id": "D:\\code\\TH_LAPTRINH_WEB\\TH_LAP_TRINH_WEB\\wwwroot\\images\\logo-bct.webp",

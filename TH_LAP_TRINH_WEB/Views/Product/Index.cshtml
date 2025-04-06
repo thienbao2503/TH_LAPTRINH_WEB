@@ -5,89 +5,10 @@
     ViewData["Title"] = "Display";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@Html.AntiForgeryToken()
 
 <link rel="stylesheet" href="~/css/product-detail.css" asp-append-version="true" />
 
-@* <section class="section-product-detail">
-    <div class="container">
-        <div class="product-detail-grid">
-            <!-- Product Images -->
-            <div class="product-images">
-                <div class="main-image">
-                    <img src="/images/sp1.webp" alt="product main image" />
-                </div>
-                <div class="thumbnail-images">
-                    <img src="/images/sp1.webp" alt="thumbnail 1" class="active" />
-                    <img src="/images/sp2.webp" alt="thumbnail 2" />
-                    <img src="/images/sp3.webp" alt="thumbnail 3" />
-                    <img src="/images/sp4.webp" alt="thumbnail 4" />
-                </div>
-            </div>
-
-            <!-- Product Info -->
-            <div class="product-info">
-                <h1>Innisfree Green Tea Seed Serum</h1>
-                <div class="price">520,000đ</div>
-
-                <!-- Product Actions -->
-                <div class="product-actions">
-                    <div class="quantity">
-                        <label>Số lượng:</label>
-                        <div class="quantity-selector">
-                            <button onclick="decreaseQuantity()">-</button>
-                            <input type="number" value="1" min="1" />
-                            <button onclick="increaseQuantity()">+</button>
-                        </div>
-                    </div>
-                    <div class="buttons">
-                        <button class="btn-add-cart">Thêm vào giỏ hàng</button>
-                        <button class="btn-buy-now">Mua ngay</button>
-                    </div>
-                </div>
-
-                <!-- Product Description -->
-                <div class="product-description">
-                    <h2>Mô tả sản phẩm</h2>
-                    <div class="description-content">
-                        <p>
-                            Tinh chất dưỡng da từ trà xanh giúp cấp ẩm và làm dịu da. Công thức chứa chiết xuất trà xanh
-                            organic
-                            từ đảo Jeju giàu amino acid...
-                        </p>
-                        <ul>
-                            <li>Dưỡng ẩm chuyên sâu</li>
-                            <li>Làm dịu da</li>
-                            <li>Cải thiện làn da</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Product Specifications -->
-                <div class="product-specs">
-                    <h2>Thông số sản phẩm</h2>
-                    <table>
-                        <tr>
-                            <td>Thương hiệu:</td>
-                            <td>Innisfree</td>
-                        </tr>
-                        <tr>
-                            <td>Xuất xứ:</td>
-                            <td>Hàn Quốc</td>
-                        </tr>
-                        <tr>
-                            <td>Dung tích:</td>
-                            <td>80ml</td>
-                        </tr>
-                        <tr>
-                            <td>Đối tượng:</td>
-                            <td>Mọi loại da</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> *@
 
 <section class="section-product-detail">
     <div class="container">
@@ -108,7 +29,7 @@
             <!-- Product Info -->
             <div class="product-info">
                 <h1>@Model.Name</h1>
-                <div class="price">@Model.Price.ToString("C0")</div>
+                <div class="price">@Model.Price.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</div>
 
                 <!-- Product Actions -->
                 <div class="product-actions">
@@ -162,6 +83,7 @@
 </section>
 
 <!-- Related Products -->
+
 <section class="section-related-products">
     <div class="container">
         <h2>Sản phẩm liên quan</h2>
@@ -170,11 +92,14 @@
             {
                 <div class="item">
                     <a aria-label="link-product" href="@Url.Action("Index", "Product", new { id = relatedProduct.Id })">
-                        <img src="@relatedProduct.Images.FirstOrDefault()?.Url" height="200" width="200" alt="ảnh-sản-phẩm" />
+                        <img src="@Model.Images?.FirstOrDefault()?.Url" alt="Product Main Image" />
+
                     </a>
                     <div class="detail">
-                        <h3><a href="@Url.Action("Index", "Product", new { id = relatedProduct.Id })">@relatedProduct.Name</a></h3>
-                        <p>@relatedProduct.Price.ToString("C0")</p>
+                        <h3><a
+                                href="@Url.Action("Index", "Product", new { id = relatedProduct.Id })">@relatedProduct.Name</a>
+                        </h3>
+                        <p>@relatedProduct.Price.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</p>
                     </div>
                 </div>
             }
@@ -182,7 +107,9 @@
     </div>
 </section>
 
+
 <script>
+
     document.querySelectorAll('.thumbnail').forEach(function (thumbnail) {
         thumbnail.addEventListener('click', function () {
             // Lấy ảnh thu nhỏ đã click
@@ -191,7 +118,7 @@
         });
     });
 
-     function increaseQuantity() {
+    function increaseQuantity() {
         var quantityInput = document.querySelector('.quantity-selector input');
         var currentQuantity = parseInt(quantityInput.value);
         quantityInput.value = currentQuantity + 1;
@@ -204,46 +131,52 @@
             quantityInput.value = currentQuantity - 1;
         }
     }
-        function addToCart(productId) {
+
+    function addToCart(productId) {
         var quantityInput = document.querySelector('.quantity-selector input');
         var quantity = parseInt(quantityInput.value);
 
-        // Gửi yêu cầu POST bằng AJAX
+        // Check if quantity is valid
+        if (isNaN(quantity) || quantity <= 0) {
+            alert('Số lượng không hợp lệ.');
+            return;
+        }
+
+        // Get the RequestVerificationToken from the hidden form input
+        var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+
         fetch('/Home/AddToCart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                'RequestVerificationToken': token // Add token for CSRF protection
             },
             body: JSON.stringify({
                 productId: productId,
                 quantity: quantity
             })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Request failed');
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
                 alert('Đã thêm sản phẩm vào giỏ hàng!');
-                // Cập nhật giỏ hàng nếu cần
-                updateCartSummary();
+                // updateCartSummary(data.cartTotal);  Update cart total on success
             } else {
-                alert(data.message);
+                alert(data.message || 'Đã xảy ra lỗi. Vui lòng thử lại.');
             }
         })
         .catch(error => {
+            console.error('Error:', error);
             alert('Đã xảy ra lỗi. Vui lòng thử lại.');
         });
     }
 
-    function updateCartSummary() {
-        fetch('/Home/GetCartSummary')
-        .then(response => response.json())
-        .then(data => {
-            // Cập nhật thông tin giỏ hàng trên giao diện (ví dụ: số lượng và tổng giá trị giỏ hàng)
-            // document.querySelector('#cart-summary').innerText = `Tổng cộng: ${data.total}đ`;
-        })
-        .catch(error => {
-            console.log('Lỗi khi cập nhật giỏ hàng:', error);
-        });
-    }
+    
 </script>
+
