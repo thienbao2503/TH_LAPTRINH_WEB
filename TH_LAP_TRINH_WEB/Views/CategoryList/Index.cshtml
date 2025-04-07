@@ -1,9 +1,16 @@
-﻿@{
+﻿@using TH_LAP_TRINH_WEB.Models
+@model IEnumerable<Product>
+
+@{
     ViewData["Title"] = "Danh mục";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link rel="stylesheet" href="~/css/category.css" asp-append-version="true" />
+
+<section class="section-banner-collection">
+    <img src="/images/collection_banner.webp" width="1920" height="400" alt="collection_banner">
+</section>
 
 <section class="section-category">
     <div class="container">
@@ -18,10 +25,10 @@
                         <ul class="layered-content">
                             @foreach (var category in ViewBag.Categories)
                             {
-                                var selectedCategoryId = ViewData["SelectedCategoryId"] as int?;  // Ép kiểu sang int?
-                                <li class="@(category.Id == selectedCategoryId ? "active" : "")">
-                                    <a href="@Url.Action("Index", new { categoryId = category.Id })">@category.Name</a>
-                                </li>
+                                    var selectedCategoryId = ViewData["SelectedCategoryId"] as int?; // Ép kiểu sang int?
+                                                                                                                                                                      <li class="@(category.Id == selectedCategoryId ? "active" : "")">
+                                                                                                                                                                          <a href="@Url.Action("Index", new { categoryId = category.Id })">@category.Name</a>
+                                                                                                                                                                      </li>
                             }
                         </ul>
                     </div>
@@ -33,31 +40,68 @@
                     <h2>
                         @if (ViewData["SelectedCategoryName"] != null)
                         {
-                            @ViewData["SelectedCategoryName"]
+                                @ViewData["SelectedCategoryName"]
                         }
                         else
                         {
-                            @:Tất cả sản phẩm
+                                @:Tất cả sản phẩm
                         }
                     </h2>
+                    <div class="form-search">
+                        <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm" />
+                        <button onclick="clearSearch()">
+                            <i class="fi fi-rr-cross"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="body">
-                    @foreach (var product in Model)
+                <div class="body" id="productList">
+                    @foreach (Product product in Model)
                     {
-                        <div class="item">
-                            <a aria-label="link-product" href="#">
-                                <img src="@product.ImageUrl" height="565" width="565" alt="@product.Name" />
-                            </a>
-                            <div class="detail">
-                                <h3>
-                                    <a href="#">@product.Name</a>
-                                </h3>
-                                <p>@product.Price.ToString("N0")đ</p>
+                            <div class="item product-item" data-name="@product.Name.ToLower()">
+                                <a aria-label="link-product" asp-controller="Product" asp-action="Index"
+                                    asp-route-id="@product.Id">
+                                    <img src="@product.ImageUrl" height="565" width="565" alt="@product.Name" />
+                                </a>
+                                <div class="detail">
+                                    <h3>
+                                        <a asp-controller="Product" asp-action="Index"
+                                            asp-route-id="@product.Id">@product.Name</a>
+                                    </h3>
+                                    <p>@product.Price.ToString("N0")đ</p>
+                                </div>
                             </div>
-                        </div>
                     }
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+@section Scripts {
+        <script>
+            const searchInput = document.getElementById('searchInput');
+            const productItems = document.querySelectorAll('.product-item');
+
+            searchInput.addEventListener('input', function (e) {
+                const searchTerm = e.target.value.toLowerCase().trim();
+
+                productItems.forEach(item => {
+                    const productName = item.getAttribute('data-name');
+                    if (productName.includes(searchTerm)) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+
+            function clearSearch() {
+                searchInput.value = '';
+                productItems.forEach(item => {
+                    item.style.display = '';
+                });
+            }
+        </script>
+}
+{
+                                                                                                                                    

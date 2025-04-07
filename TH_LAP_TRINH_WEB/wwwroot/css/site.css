@@ -37,7 +37,7 @@ i {
 .navbar-nav {
     display: flex !important;
     flex-direction: row;
-    align-items : center;
+    align-items: center;
     gap: 10px;
 }
 
@@ -194,7 +194,7 @@ main {
 }
 
 .item-menu {
-    grid-column : 2 span / 2 span;
+    grid-column: 2 span / 2 span;
 }
 
 .navbar .box {
@@ -1041,11 +1041,15 @@ footer .box {
 }
 
 .btn {
-    display : flex;
-    align-items : center;
-    justify-content : center;gap :4px
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px
 }
-.nav-item.cart a, .btn-main.add-to-cart, .btn.btn-primary {
+
+.nav-item.cart a,
+.btn-main.add-to-cart,
+.btn.btn-primary {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1056,13 +1060,17 @@ footer .box {
     color: var(--primary-color-bold) !important;
     border-radius: 8px;
 }
-    .nav-item.cart a:hover, .btn-main.add-to-cart:hover, .btn.btn-primary:hover {
-        background-color: var(--primary-color-bold);
-        color: white !important;
-    }
-    /* animation */
-    @keyframes showNavbar {
-        0% {
+
+.nav-item.cart a:hover,
+.btn-main.add-to-cart:hover,
+.btn.btn-primary:hover {
+    background-color: var(--primary-color-bold);
+    color: white !important;
+}
+
+/* animation */
+@keyframes showNavbar {
+    0% {
         transform: translateY(-67px);
     }
 

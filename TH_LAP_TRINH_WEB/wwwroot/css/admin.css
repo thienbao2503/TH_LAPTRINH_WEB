@@ -12,6 +12,7 @@ body {
     font-size: 14px;
     font-weight: 400;
 }
+
 h3 {
     font-family: "Be Vietnam Pro", serif;
 }
@@ -315,6 +316,7 @@ main {
 
 .menu-transition .main .box-search .box-list-input {
     display: flex;
+    align-items: center;
     gap: 4px;
 }
 
@@ -419,30 +421,32 @@ main {
     flex-direction: row;
     gap: 20px;
 }
-    .table_btn .btn-edit:hover {
-        color: var(--color-primary);
-    }
+
+.table_btn .btn-edit:hover {
+    color: var(--color-primary);
+}
 
 .container-table {
     padding: 20px;
 }
-    .container-table form {
-        gap: 10px;
-        display: flex;
-        flex-direction : column;
-    }
 
-    .btn.btn-primary {
-        background-color: var(--color-primary);
-        border: 0px;
-    }
+.container-table form {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
 
-    .container-table .btn {
-        width: 200px;
-    }
+.btn.btn-primary {
+    background-color: var(--color-primary);
+    border: 0px;
+}
 
-    @keyframes menu {
-        0% {
+.container-table .btn {
+    width: 200px;
+}
+
+@keyframes menu {
+    0% {
         transform: scale(0) translate(50%, -50%);
         opacity: 0;
     }
@@ -451,4 +455,45 @@ main {
         transform: scale(1) translate(0, 0);
         opacity: 1;
     }
+}
+
+.box-form-product {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px;
+    align-items: start;
+}
+
+.box-form-product .form-group.ck-editor {
+    flex: 1;
+}
+
+
+
+.ck.ck-editor__main .ck.ck-content.ck-blurred,
+.ck.ck-editor__main .ck.ck-content.ck-focused {
+    min-height: 600px !important;
+}
+
+.box-form-product .form-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.box-form-product .box-image ul,
+#previewImageContainer,
+#image-preview-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.box-form-product .box-image ul li img,
+#previewImageContainer img,
+#image-preview-container img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    border-radius: 4px;
 }

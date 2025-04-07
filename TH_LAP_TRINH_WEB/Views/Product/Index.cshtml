@@ -15,14 +15,16 @@
         <div class="product-detail-grid">
             <!-- Product Images -->
             <div class="product-images">
-                <div class="main-image">
-                    <img src="@Model.Images.FirstOrDefault()?.Url" alt="Product Main Image" />
-                </div>
-                <div class="thumbnail-images">
-                    @foreach (var image in Model.Images)
-                    {
-                        <img src="@image.Url" alt="Thumbnail Image" class="thumbnail" />
-                    }
+                <div class="product-images-sticky">
+                    <div class="main-image">
+                        <img src="@Model.Images.FirstOrDefault()?.Url" alt="Product Main Image" />
+                    </div>
+                    <div class="thumbnail-images">
+                        @foreach (var image in Model.Images)
+                        {
+                            <img src="@image.Url" alt="Thumbnail Image" class="thumbnail" />
+                        }
+                    </div>
                 </div>
             </div>
 
@@ -51,7 +53,10 @@
                 <div class="product-description">
                     <h2>Mô tả sản phẩm</h2>
                     <div class="description-content">
-                        <p>@Model.Description</p>
+                        <div class="description-text" id="description">
+                            @Html.Raw(Model.Description)
+                        </div>
+                        <button onclick="toggleDescription()" id="toggleBtn" class="btn-toggle">Xem thêm</button>
                     </div>
                 </div>
 
@@ -89,20 +94,24 @@
         <h2>Sản phẩm liên quan</h2>
         <div class="related-products-grid">
             @foreach (var relatedProduct in ViewBag.RelatedProducts as IEnumerable<Product>)
+{
+    <div class="item">
+        <a aria-label="link-product" href="@Url.Action("Index", "Product", new { id = relatedProduct.Id })">
+            @if (!string.IsNullOrEmpty(relatedProduct.ImageUrl))
             {
-                <div class="item">
-                    <a aria-label="link-product" href="@Url.Action("Index", "Product", new { id = relatedProduct.Id })">
-                        <img src="@Model.Images?.FirstOrDefault()?.Url" alt="Product Main Image" />
-
-                    </a>
-                    <div class="detail">
-                        <h3><a
-                                href="@Url.Action("Index", "Product", new { id = relatedProduct.Id })">@relatedProduct.Name</a>
-                        </h3>
-                        <p>@relatedProduct.Price.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</p>
-                    </div>
-                </div>
+                <img src="@relatedProduct.ImageUrl" alt="@relatedProduct.Name" />
             }
+            else
+            {
+                <img src="/images/no-image.jpg" alt="No image available" />
+            }
+        </a>
+        <div class="detail">
+            <h3><a href="@Url.Action("Index", "Product", new { id = relatedProduct.Id })">@relatedProduct.Name</a></h3>
+            <p>@relatedProduct.Price.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</p>
+        </div>
+    </div>
+}
         </div>
     </div>
 </section>
@@ -177,6 +186,72 @@
         });
     }
 
+    // Add this new function for description toggle
+    function toggleDescription() {
+        const description = document.getElementById('description');
+        const toggleBtn = document.getElementById('toggleBtn');
+        
+        description.classList.toggle('expanded');
+        toggleBtn.textContent = description.classList.contains('expanded') ? 'Thu gọn' : 'Xem thêm';
+    }
+
+    // Check if description needs a toggle button
+    window.addEventListener('DOMContentLoaded', function() {
+        const description = document.getElementById('description');
+        const toggleBtn = document.getElementById('toggleBtn');
+        
+        if (description.scrollHeight > 200) {
+            toggleBtn.style.display = 'block';
+        }
+    });
     
 </script>
+
+<style>
+ .description-content {
+    position: relative;
+}
+
+.description-text {
+    max-height: 400px;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    position: relative;
+}
+
+.description-text.expanded {
+    max-height: none;
+}
+
+/* Thêm lớp overlay khi ẩn bớt mô tả */
+.description-text::after {
+    content: "";
+    position: absolute;
+   
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 30%;
+    background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)); /* Gradient từ trắng mờ đến trong suốt */
+    pointer-events: none; /* Để không ảnh hưởng đến thao tác chuột */
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+}
+
+/* Khi mô tả mở rộng, ẩn lớp overlay */
+.description-text.expanded::after {
+    opacity: 0;
+}
+
+.btn-toggle {
+    display: none;
+    margin: 10px auto 0px;
+    padding: 5px 15px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+</style>
 

@@ -11,75 +11,129 @@
 
     <hr />
     <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Update" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div>
+            <div>
+                <form asp-action="Update" class="box-form-product" enctype="multipart/form-data">
+                    <div class="form-box">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
 
-                <div class="form-group">
-                    <label asp-for="Price" class="control-label"></label>
-                    <input asp-for="Price" class="form-control" />
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                </div>
+                        <div class="form-group">
+                            <label asp-for="Price" class="control-label"></label>
+                            <input asp-for="Price" class="form-control" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
 
-                <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" class="form-control" />
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
+                        <!-- Input để tải ảnh mới -->
+                        <div class="form-group">
+                            <label for="images">Tải ảnh sản phẩm lên (Tối đa 5 ảnh):</label>
+                            <input type="file" name="images" id="images" class="form-control" accept="image/*"
+                                multiple />
+                        </div>
 
-                <!-- Input để tải ảnh mới -->
-                <div class="form-group">
-                    <label for="images">Upload Images (Max 5 images):</label>
-                    <input type="file" name="images" id="images" class="form-control" accept="image/*" multiple />
-                </div>
+                        <!-- Hiển thị ảnh mới được chọn -->
+                        <div class="form-group" id="newImagesSection" style="display: none;">
+                            <label>Ảnh mới:</label>
+                            <div id="previewImageContainer"></div> <!-- Chứa các ảnh được chọn -->
+                        </div>
 
-                <!-- Hiển thị ảnh mới được chọn -->
-                <div class="form-group" id="newImagesSection" style="display: none;">
-                    <label>New Images:</label>
-                    <div id="previewImageContainer"></div> <!-- Chứa các ảnh được chọn -->
-                </div>
+                        @if (Model.Images != null && Model.Images.Count > 0)
+                        {
+                            <div class="form-group box-image">
+                                <label>Ảnh hiện tại:</label>
+                                <ul>
+                                    @foreach (var image in Model.Images)
+                                    {
+                                        <li>
+                                            <img src="@image.Url" alt="Product Image"
+                                                style="max-width: 100px; height: auto; border: 1px solid #ccc; padding: 5px;" />
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        }
 
-                @if (Model.Images != null && Model.Images.Count > 0)
-                {
-                    <div class="form-group">
-                        <label>Current Images:</label>
-                        <ul>
-                            @foreach (var image in Model.Images)
-                            {
-                                <li>
-                                    <img src="@image.Url" alt="Product Image" style="max-width: 100px; height: auto; border: 1px solid #ccc; padding: 5px;" />
-                                </li>
-                            }
-                        </ul>
+                        <div class="form-group">
+                            <label asp-for="CategoryId" class="control-label"></label>
+                            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control">
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <input type="submit" value="Cập Nhật" class="btn btn-primary" />
+                            <a asp-action="Index" class="btn btn-secondary">Về Danh Sách</a>
+                        </div>
                     </div>
-                }
+                    <div class="form-group ck-editor">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" class="form-control" id="editor"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label asp-for="CategoryId" class="control-label"></label>
-                    <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control">
-                    </select>
-                    <span asp-validation-for="CategoryId" class="text-danger"></span>
-                </div>
-
-                <div class="form-group mt-3">
-                    <input type="submit" value="Cập Nhật" class="btn btn-primary" />
-                    <a asp-action="Index" class="btn btn-secondary">Về Danh Sách</a>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 
-   
-</div>
 
+</div>
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 @section Scripts {
+
     <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+
+                image: {
+                    toolbar: [
+                        'imageTextAlternative',
+                        'imageStyle:alignLeft',
+                        'imageStyle:alignCenter',
+                        'imageStyle:alignRight'
+                    ]
+                }
+            })
+            .then(editor => {
+                // Thêm Base64UploadAdapter nếu chưa có
+                editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                    return new MyBase64UploadAdapter(loader);
+                };
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        // Adapter base64
+        class MyBase64UploadAdapter {
+            constructor(loader) {
+                this.loader = loader;
+            }
+
+            upload() {
+                return this.loader.file.then(file => {
+                    return new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                            resolve({ default: reader.result });
+                        };
+                        reader.onerror = err => reject(err);
+                        reader.readAsDataURL(file);
+                    });
+                });
+            }
+
+            abort() {
+                // Do nothing for now
+            }
+        }
+
+
         document.getElementById("images").addEventListener("change", function (event) {
             var previewContainer = document.getElementById("previewImageContainer");
             var newImagesSection = document.getElementById("newImagesSection");
@@ -102,9 +156,9 @@
                 previewContainer.innerHTML = "";
 
                 // Hiển thị tất cả các ảnh mới được chọn
-                Array.from(files).forEach(function(file) {
+                Array.from(files).forEach(function (file) {
                     var reader = new FileReader();
-                    reader.onload = function(e) {
+                    reader.onload = function (e) {
                         var img = document.createElement("img");
                         img.src = e.target.result;
                         img.style.maxWidth = "100px";
@@ -131,4 +185,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-

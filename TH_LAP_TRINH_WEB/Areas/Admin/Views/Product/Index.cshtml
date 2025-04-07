@@ -6,113 +6,119 @@
     Layout = "~/Areas/Admin/Views/_Layout.cshtml";
 }
 
-
-
-
 <div class="box-add">
     <div class="box-list-button">
         @* <button><i class="fi fi-rr-file-import"></i> Nhập dữ liệu</button> *@
         @* <button><i class="fi fi-rr-file-export"></i> Xuất dữ liệu</button> *@
     </div>
     <a asp-area="Admin" asp-controller="Product" asp-action="Add">
-    <button class="btn-add"><i class="fi fi-rr-plus-small"></i> Thêm Sản Phẩm</button>
+        <button class="btn-add"><i class="fi fi-rr-plus-small"></i> Thêm Sản Phẩm</button>
     </a>
-
 </div>
+
 <div class="box-search">
     <h2>DS Sản Phẩm</h2>
     <div class="box-list-input">
-        <select name="" id="">
-            <option value="">Tất cả</option>
-            <option value="">Option 2</option>
-            <option value="">Option 3</option>
+        <select id="categoryFilter" name="categoryFilter">
+            <option value="">Tất cả danh mục</option>
+            @foreach (var category in (IEnumerable<Category>)ViewBag.Categories)
+            {
+                <option value="@category.Id">@category.Name</option>
+            }
         </select>
-        <select name="" id="">
-            <option value="">Tất cả</option>
-            <option value="">Option 2</option>
-            <option value="">Option 3</option>
-        </select>
-        <input type="search" name="" placeholder="Nhập Tên tìm kiếm" id="">
-        <button class="btn-search">
+        <input type="search" id="searchInput" name="searchInput" placeholder="Nhập tên sản phẩm để tìm kiếm">
+        <button class="btn-search" onclick="filterProducts()">
             <i class="fi fi-rr-search"></i>
         </button>
-        <button class="btn-refresh">
+        <button class="btn-refresh" onclick="resetFilters()">
             <i class="fi fi-rr-refresh"></i>
-
+        </button>
     </div>
 </div>
+
 <div class="box-table">
-    
     <table>
         <thead>
-                <tr> 
+            <tr>
                 <th>
-               @Html.DisplayNameFor(model => model.Id) 
-                </th> 
-               <th>
-                    @Html.DisplayNameFor(model => model.Name) 
-                 </th> 
-                <th> 
-                    @Html.DisplayNameFor(model => model.Price) 
-                </th> 
-                <th> 
-                   @Html.DisplayNameFor(model => model.Description) 
-                 </th> 
-                 <th> 
-                     @Html.DisplayNameFor(model => model.ImageUrl) 
-                 </th> 
-                 <th> 
-                     @Html.DisplayNameFor(model => model.CategoryId) 
-                 </th> 
-                 <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImageUrl)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CategoryId)
+                </th>
+                <th>
                     Tính Năng
-                 </th> 
-             </tr> 
-
-
+                </th>
+            </tr>
         </thead>
         <tbody>
-             @foreach (var item in Model) 
-            { 
-                 <tr> 
-                     <td> 
-                         @Html.DisplayFor(modelItem => item.Id) 
-                     </td> 
-                     <td> 
-                         @Html.DisplayFor(modelItem => item.Name) 
-                     </td> 
-                     <td> 
-                         @Html.DisplayFor(modelItem => item.Price) 
-                     </td> 
-                     <td> 
-                         @Html.DisplayFor(modelItem => item.Description) 
-                     </td> 
-
-                    <td> 
-                         <img src="@item.ImageUrl" alt="@item.Name" style="width: auto; height: 50px;" />           
-                         </td> 
-                     <td> 
-                         @Html.DisplayFor(modelItem => item.Category.Name) 
-                     </td> 
-                     <td> 
+            @foreach (var item in Model)
+            {
+                <tr data-category-id="@item.CategoryId">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        <img src="@item.ImageUrl" alt="@item.Name" style="width: auto; height: 50px;" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
                         <div class="table_btn">
-                            <a href="@Url.Action("Display", new { id = item.Id })" class="btn-edit"><i class="fi fi-rr-overview"></i></a>
-                            <a href="@Url.Action("Update", new { id = item.Id })" class="btn-edit"><i class="fi fi-rr-pencil"></i></a>
-                            <a href="@Url.Action("Delete", new { id = item.Id })" class="btn-edit"><i class="fi fi-rr-trash"></i></a>
+                            <a href="@Url.Action("Display", new { id = item.Id })" class="btn-edit"><i
+                                    class="fi fi-rr-overview"></i></a>
+                            <a href="@Url.Action("Update", new { id = item.Id })" class="btn-edit"><i
+                                    class="fi fi-rr-pencil"></i></a>
+                            <a href="@Url.Action("Delete", new { id = item.Id })" class="btn-edit"><i
+                                    class="fi fi-rr-trash"></i></a>
                         </div>
-                    </td> 
-                 </tr> 
-                 }
-
-            
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
 
+@section Scripts{
+    <script>
+        function filterProducts() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const categoryId = document.getElementById('categoryFilter').value;
+            const rows = document.querySelectorAll('tbody tr');
 
+            rows.forEach(row => {
+                const name = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                const categoryMatch = !categoryId || row.getAttribute('data-category-id') === categoryId;
+                const nameMatch = name.includes(searchInput);
 
+                row.style.display = (categoryMatch && nameMatch) ? '' : 'none';
+            });
+        }
 
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('categoryFilter').value = '';
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => row.style.display = '');
+        }
 
-
-
-
+        document.getElementById('searchInput').addEventListener('keyup', filterProducts);
+        document.getElementById('categoryFilter').addEventListener('change', filterProducts);
+    </script>
+}

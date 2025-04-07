@@ -71,7 +71,15 @@ namespace TH_LAP_TRINH_WEB.Repositories
         {
             return await _context.Products
                 .Where(p => p.CategoryId == categoryId) // Lọc theo category hoặc tiêu chí nào đó
+                .Include(p => p.Images)  // Lấy thông tin ảnh của sản phẩm
                 .Take(4) // Lấy một số lượng sản phẩm nhất định
+                .Select(p => new Product
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    ImageUrl = p.Images != null && p.Images.Any() ? p.Images.FirstOrDefault().Url : null // Lấy ảnh đầu tiên của sản phẩm
+                })
                 .ToListAsync();
         }
     }

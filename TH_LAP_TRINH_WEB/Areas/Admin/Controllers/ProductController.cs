@@ -24,6 +24,7 @@ namespace TH_LAP_TRINH_WEB.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var products = await _productRepository.GetAllAsync();
+            ViewBag.Categories = await _categoryRepository.GetAllAsync();
             return View(products);
         }
         // Hiển thị form thêm sản phẩm mới
@@ -34,7 +35,7 @@ namespace TH_LAP_TRINH_WEB.Areas.Admin.Controllers
             return View(new Product()); // Pass empty product model
         }
         // Xử lý thêm sản phẩm mới
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add([Bind("Name,Price,Description,CategoryId")] Product product, List<IFormFile> images)

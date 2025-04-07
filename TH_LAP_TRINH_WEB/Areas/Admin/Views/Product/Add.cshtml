@@ -5,72 +5,127 @@
     Layout = "~/Areas/Admin/Views/_Layout.cshtml";
 }
 
+
 <div class="container-table">
     <h3>Thêm Sản Phẩm</h3>
     <hr />
     <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Add" enctype="multipart/form-data" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+        <div>
+            <form asp-action="Add" class="box-form-product" enctype="multipart/form-data" method="post">
+                <div class="form-box">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" type="number" min="1" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Hình ảnh</label>
+                        <input type="file" name="images" class="form-control" accept="image/*" multiple
+                            onchange="previewImages(event)" />
+                        <small class="text-muted" style="margin-top:2px;">Tối đa 5 ảnh</small>
+                        <div id="image-preview-container" style="margin-top: 10px;"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="CategoryId" class="control-label">Category</label>
+                        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control">
+                            <option value="">-- Select Category --</option>
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                        <input type="submit" value="Thêm Sản Phẩm" class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-secondary">Về Danh Sách</a>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Price" class="control-label"></label>
-                    <input asp-for="Price" class="form-control" />
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                </div>
-                <div class="form-group">
+                <div class="form-group ck-editor">
                     <label asp-for="Description" class="control-label"></label>
-                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <textarea asp-for="Description" class="form-control" id="editor"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Hình ảnh</label>
-                    <input type="file" name="images" class="form-control" accept="image/*" multiple onchange="previewImages(event)" />
-                    <small class="text-muted" style="margin-top:2px;">Tối đa 5 ảnh</small>
-                    <div id="image-preview-container" style="margin-top: 10px;"></div>
-                </div>
 
-                <div class="form-group">
-                    <label asp-for="CategoryId" class="control-label">Category</label>
-                    <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control">
-                        <option value="">-- Select Category --</option>
-                    </select>
-                    <span asp-validation-for="CategoryId" class="text-danger"></span>
-                </div>
-                <div class="form-group mt-3">
-                    <input type="submit" value="Thêm Sản Phẩm" class="btn btn-primary" />
-                    <a asp-action="Index" class="btn btn-secondary">Về Danh Sách</a>
-                </div>
             </form>
         </div>
+
     </div>
 </div>
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 
 <script>
+    ClassicEditor
+        .create(document.querySelector('#editor'), {
+
+            image: {
+                toolbar: [
+                    'imageTextAlternative',
+                    'imageStyle:alignLeft',
+                    'imageStyle:alignCenter',
+                    'imageStyle:alignRight'
+                ]
+            }
+        })
+        .then(editor => {
+            // Thêm Base64UploadAdapter nếu chưa có
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                return new MyBase64UploadAdapter(loader);
+            };
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    // Adapter base64
+    class MyBase64UploadAdapter {
+        constructor(loader) {
+            this.loader = loader;
+        }
+
+        upload() {
+            return this.loader.file.then(file => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        resolve({ default: reader.result });
+                    };
+                    reader.onerror = err => reject(err);
+                    reader.readAsDataURL(file);
+                });
+            });
+        }
+
+        abort() {
+            // Do nothing for now
+        }
+    }
+
+
     function previewImages(event) {
-         const files = Array.from(event.target.files);
-         const container = document.getElementById('image-preview-container');
-         container.innerHTML = "";
+        const files = Array.from(event.target.files);
+        const container = document.getElementById('image-preview-container');
+        container.innerHTML = "";
 
-         if (files.length > 5) {
-             alert("Bạn chỉ được chọn tối đa 5 ảnh!");
-             event.target.value = "";
-             return;
-         }
+        if (files.length > 5) {
+            alert("Bạn chỉ được chọn tối đa 5 ảnh!");
+            event.target.value = "";
+            return;
+        }
 
-         files.forEach((file, index) => {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const div = document.createElement('div');
-            div.style.display = 'inline-block';
-            div.style.position = 'relative';
-            div.style.marginRight = '5px';
+        files.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const div = document.createElement('div');
+                div.style.display = 'inline-block';
+                div.style.position = 'relative';
+                div.style.marginRight = '5px';
 
-            div.innerHTML = `
+                div.innerHTML = `
                 <img src="${e.target.result}" style="max-height: 100px; border-radius: 5px;">
                 <button type="button" onclick="removeImage(${index})"
                     style="position: absolute; top: -5px; right: -5px; background: rgba(0,0,0,0.5);
@@ -80,22 +135,22 @@
                 </button>
             `;
 
-            container.appendChild(div);
-        };
-        reader.readAsDataURL(file);
-    });
-     }
+                container.appendChild(div);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
 
-     function removeImage(index) {
-         const input = document.querySelector('input[type="file"]');
-         const files = Array.from(input.files);
-         files.splice(index, 1);
+    function removeImage(index) {
+        const input = document.querySelector('input[type="file"]');
+        const files = Array.from(input.files);
+        files.splice(index, 1);
 
-         const dataTransfer = new DataTransfer();
-         files.forEach(file => dataTransfer.items.add(file));
-         input.files = dataTransfer.files;
-         previewImages({ target: input });
-     }
+        const dataTransfer = new DataTransfer();
+        files.forEach(file => dataTransfer.items.add(file));
+        input.files = dataTransfer.files;
+        previewImages({ target: input });
+    }
 </script>
 
 @section Scripts {

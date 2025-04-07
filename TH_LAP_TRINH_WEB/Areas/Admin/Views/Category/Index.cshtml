@@ -64,12 +64,11 @@
 <div class="box-search">
     <h2>DS Danh Mục</h2>
     <div class="box-list-input">
-       
-        <input type="search" name="" placeholder="Nhập Tên tìm kiếm" id="">
-        <button class="btn-search">
+        <input type="search" id="searchInput" placeholder="Nhập Tên tìm kiếm">
+        <button class="btn-search" onclick="searchCategories()">
             <i class="fi fi-rr-search"></i>
         </button>
-        <button class="btn-refresh">
+        <button class="btn-refresh" onclick="resetSearch()">
             <i class="fi fi-rr-refresh"></i>
         </button>
     </div>
@@ -113,9 +112,12 @@
                     </td>
                     <td>
                         <div class="table_btn">
-                            <a href="@Url.Action("Display", new { id = item.Id })" class="btn-edit"><i class="fi fi-rr-overview"></i></a>
-                            <a href="@Url.Action("Update", new { id = item.Id })" class="btn-edit"><i class="fi fi-rr-pencil"></i></a>
-                            <a href="@Url.Action("Delete", new { id = item.Id })" class="btn-edit"><i class="fi fi-rr-trash"></i></a>
+                            <a href="@Url.Action("Display", new { id = item.Id })" class="btn-edit"><i
+                                    class="fi fi-rr-overview"></i></a>
+                            <a href="@Url.Action("Update", new { id = item.Id })" class="btn-edit"><i
+                                    class="fi fi-rr-pencil"></i></a>
+                            <a href="@Url.Action("Delete", new { id = item.Id })" class="btn-edit"><i
+                                    class="fi fi-rr-trash"></i></a>
                         </div>
                     </td>
                 </tr>
@@ -135,4 +137,26 @@
 @*         <li class="next"><a href="#"><i class="fi fi-rr-angle-right"></i></a></li> *@
 @*     </ul> *@
 @* </div> *@
+
+@section Scripts{
+    <script>
+        function searchCategories() {
+            const searchValue = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                const name = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                row.style.display = name.includes(searchValue) ? '' : 'none';
+            });
+        }
+
+        function resetSearch() {
+            document.getElementById('searchInput').value = '';
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => row.style.display = '');
+        }
+
+        document.getElementById('searchInput').addEventListener('keyup', searchCategories);
+    </script>
+}
 

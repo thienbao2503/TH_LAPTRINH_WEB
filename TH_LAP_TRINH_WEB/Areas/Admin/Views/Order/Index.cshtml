@@ -5,61 +5,31 @@
     Layout = "~/Areas/Admin/Views/_Layout.cshtml";
 }
 
-@* <div class="container">
-    <h2>DS Đơn Hàng</h2>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID Đơn hàng</th>
-                <th>Ngày đặt</th>
-                <th>Tổng giá trị đơn hàng</th>
-                <th>Hàng động</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var order in Model)
-            {
-                <tr>
-                    <td>@order.Id</td>
-                    <td>@order.OrderDate.ToString("g")</td>
-                    <td>@order.TotalPrice.ToString("N0") đ</td>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-info">Xem chi tiết</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div> *@
-
-
 <div class="box-search">
-    <h2>DS Đơn Hàng</h2>
+    <h2>DS Đơn Hàng</h2>
     <div class="box-list-input">
-
-        <input type="search" name="" placeholder="Nhập Tên tìm kiếm" id="">
-        <button class="btn-search">
+        <p>Từ ngày</p>
+        <input type="date" id="startDate" placeholder="Từ ngày">
+        <p>Đến ngày</p>
+        <input type="date" id="endDate" placeholder="Đến ngày">
+        <button class="btn-search" onclick="filterOrders()">
             <i class="fi fi-rr-search"></i>
         </button>
-        <button class="btn-refresh">
+        <button class="btn-refresh" onclick="resetFilters()">
             <i class="fi fi-rr-refresh"></i>
         </button>
     </div>
 </div>
+
 <div class="box-table">
     <table>
         <thead>
-          
-
             <tr>
                 <th>ID Đơn hàng</th>
                 <th>Ngày đặt</th>
                 <th>Tổng giá trị đơn hàng</th>
                 <th>Hàng động</th>
             </tr>
-
-
         </thead>
         <tbody>
             @foreach (var order in Model)
@@ -73,8 +43,65 @@
                     </td>
                 </tr>
             }
-
-
         </tbody>
     </table>
 </div>
+
+@section Scripts{
+    <script>
+        // Hàm kiểm tra ngày kết thúc không được phép trước ngày bắt đầu và không chọn ngày tương lai
+        function validateDates() {
+            const today = new Date().toISOString().split("T")[0]; // Ngày hiện tại (yyyy-mm-dd)
+
+            const startDate = document.getElementById('startDate');
+            const endDate = document.getElementById('endDate');
+
+            // Không cho phép chọn ngày bắt đầu trong tương lai
+            startDate.setAttribute('max', today);
+            endDate.setAttribute('max', today);
+
+            // Nếu ngày kết thúc được chọn trước ngày bắt đầu, hãy cập nhật lại ngày kết thúc
+            if (endDate.value && startDate.value && new Date(endDate.value) < new Date(startDate.value)) {
+                endDate.setCustomValidity("Ngày kết thúc không thể trước ngày bắt đầu");
+            } else {
+                endDate.setCustomValidity(""); // Xóa lỗi nếu ngày hợp lệ
+            }
+        }
+
+        // Hàm lọc đơn hàng theo khoảng thời gian
+        function filterOrders() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const rows = document.querySelectorAll('tbody tr');
+
+            const start = startDate ? new Date(startDate) : null;
+            const end = endDate ? new Date(endDate) : null;
+
+            if (start) start.setHours(0, 0, 0, 0); // Đảm bảo ngày bắt đầu là 0h
+            if (end) end.setHours(23, 59, 59, 999); // Đảm bảo ngày kết thúc là 23:59:59.999
+
+            rows.forEach(row => {
+                const orderDate = new Date(row.querySelector('td:nth-child(2)').textContent);
+                const dateMatch = (!start || orderDate >= start) && (!end || orderDate <= end);
+                row.style.display = dateMatch ? '' : 'none';
+            });
+        }
+
+        // Hàm reset bộ lọc
+        function resetFilters() {
+            document.getElementById('startDate').value = '';
+            document.getElementById('endDate').value = '';
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => row.style.display = '');
+        }
+
+        // Đảm bảo ngày không được chọn trước ngày hiện tại
+        document.getElementById('startDate').addEventListener('change', validateDates);
+        document.getElementById('endDate').addEventListener('change', validateDates);
+
+        // Khi tải trang, kiểm tra lại
+        window.onload = function() {
+            validateDates();
+        };
+    </script>
+}
